@@ -20,4 +20,4 @@ npm run build  构建生成包
 使用二级路由
 
 1. `/ticketManage/recoverList` 回收列表
-1. `/ticketManage/recoverDetail` 回收详情
+2. `/ticketManage/recoverDetail` 回收详情
