@@ -42,8 +42,7 @@ module.exports = {
                 loader: require.resolve("babel-loader")
             },
             {
-                test: /\.css|\.less/,
-                include: paths.appSrc,
+                test:/\.css/,
                 loader: ExtractTextPlugin.extract(
                     Object.assign({
                         fallback: require.resolve("style-loader"),
@@ -53,9 +52,6 @@ module.exports = {
                                 options: {
                                     importLoaders: 1
                                 }
-                            },
-                            {
-                                loader: require.resolve("less-loader") // compiles Less to CSS
                             },
                             {
                                 loader: require.resolve("postcss-loader"),
@@ -77,6 +73,54 @@ module.exports = {
                                         })
                                     ]
                                 }
+                            }
+                        ],
+                        publicPath: "./"
+                    })
+                )
+
+            },
+            {
+                test: /\.less/,
+                loader: ExtractTextPlugin.extract(
+                    Object.assign({
+                        fallback: require.resolve("style-loader"),
+                        use: [
+                            {
+                                loader: require.resolve("css-loader"),
+                                options: {
+                                    importLoaders: 1
+                                }
+                            },
+                            {
+                                loader: require.resolve("postcss-loader"),
+                                options: {
+                                    ident: "postcss",
+                                    plugins: () => [
+                                        require("postcss-flexbugs-fixes"),
+                                        require("autoprefixer")({
+                                            browsers: [
+                                                ">1%",
+                                                "last 4 versions",
+                                                "Firefox ESR",
+                                                "not ie < 9"
+                                            ],
+                                            flexbox: "no-2009"
+                                        }),
+                                        require("postcss-px2rem")({
+                                            remUnit: 100
+                                        })
+                                    ]
+                                }
+                            },
+                            {
+                                loader: require.resolve("less-loader"), // compiles Less to CSS
+                                options:{
+                                    javascriptEnabled:true,
+                                    modifyVars: {
+                                      "hd": "1px"
+                                    }
+                                  } 
                             }
                         ],
                         publicPath: "./"

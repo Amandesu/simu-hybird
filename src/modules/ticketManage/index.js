@@ -6,6 +6,9 @@ import Loadable from "react-loadable"
 
 
 // 按需加载
+const Home = Loadable({
+    loader: () => import('./routers/home'), loading: () => <div></div>
+});
 const RecoverList = Loadable({
     loader: () => import('./routers/recoverList'), loading: () => <div></div>
 }); 
@@ -16,9 +19,13 @@ const RecoverDetail = Loadable({
 let routers = (props) => {
     return (
         <Switch>
+            <Route path="/ticketManage/home" exact 
+                render={(props) => {
+                    return <RecoverList />
+                }}
+            />
             <Route path="/ticketManage/recoverList" exact 
                 render={(props) => {
-                    console.log(<RecoverList />)
                     return <RecoverList />
                 }}
             />
@@ -29,7 +36,6 @@ let routers = (props) => {
             />
             <Route path="/ticketManage" exact 
                 render={(props) => {
-                    console.log(22)
                     return <RecoverList />
                 }}
             />

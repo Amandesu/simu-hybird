@@ -48,8 +48,7 @@
                 docEl.setAttribute('data-mobile', true)
             }
             var rem = docEl.clientWidth*2 / baseFontSize;
-            docEl.style.fontSize = rem + 'px';
-            //document.body.style.fontSize = 12 + 'px';
+            docEl.style.fontSize = rem + 'px'
         }
         setRemUnit();
         window.addEventListener('resize', setRemUnit)
@@ -58,6 +57,9 @@
                 setRemUnit()
             }
         });
+        window.addEventListener("DOMContentLoaded", function(){
+            document.body.style.fontSize = 12 + 'px';
+        })
     </script>
     <title></title>
     <style>

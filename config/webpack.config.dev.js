@@ -48,24 +48,14 @@ module.exports = {
                 include: paths.appSrc,
                 loader:require.resolve('babel-loader')
             }, {
-                test:/\.css|\.less/,
-                include: paths.appSrc,
+                test:/\.css/,
                 use:[
                     require.resolve('style-loader'),
                     {
                         loader: require.resolve('css-loader'),
                         options: {
-                            importLoaders: 1,
+                            importLoaders: 1
                         }
-                    },
-                    {
-                        loader: require.resolve('less-loader'), // compiles Less to CSS
-                        /* options:{
-                          javascriptEnabled:true,
-                          modifyVars: {
-                            "hd": "2px"
-                          }
-                        } */
                     },
                     {
                         loader:require.resolve('postcss-loader'),
@@ -86,6 +76,47 @@ module.exports = {
                             ]
                         }
                     }
+                ]
+
+            }, {
+                test:/\.less/,
+                use:[
+                    require.resolve('style-loader'),
+                    {
+                        loader: require.resolve('css-loader'),
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader:require.resolve('postcss-loader'),
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [
+                                require('postcss-flexbugs-fixes'),
+                                require('autoprefixer')({
+                                    browsers: [
+                                        '>1%',
+                                        'last 4 versions',
+                                        'Firefox ESR',
+                                        'not ie < 9',
+                                    ],
+                                    flexbox: 'no-2009',
+                                }),
+                                require("postcss-px2rem")({ remUnit: 100 })
+                            ]
+                        }
+                    },
+                    {
+                        loader: require.resolve('less-loader'), // compiles Less to CSS
+                        options:{
+                          javascriptEnabled:true,
+                          modifyVars: {
+                            "hd": "1px"
+                          }
+                        } 
+                    }
+                    
                 ]
             }
         ]
