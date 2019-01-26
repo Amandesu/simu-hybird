@@ -11,12 +11,9 @@ export const TicketManage_Home = handleActions(
         list:[]
     }
 )
-
-
 export const TicketManage_RecoverDetail = handleActions(
     {
         ["TICKETMANAGE_RECOVERDETAIL_CHANEGE"]: (state, payload)=>{
-            console.log(state)
             return state;
         }
     },
@@ -37,3 +34,6 @@ export const TicketManage_RecoverList = handleActions(
     }
 )
 
+export {
+    TicketManage_Component_FooterTab
+} from "./component/reduce"

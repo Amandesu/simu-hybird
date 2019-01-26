@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const WebpackParallelUglifyPlugin = require("webpack-parallel-uglify-plugin");
 const path = require("path");
 const paths = require("./paths");
 const fs = require("fs");
@@ -30,102 +31,119 @@ module.exports = {
             (process.env.NODE_PATH || "").split(path.delimiter).filter(Boolean)
         ),
         extensions: [".js", ".json", ".jsx"],
-        alias: {},
+        alias: {
+            images: path.resolve(process.cwd(), "src/images"),
+            ticketManage:path.resolve(process.cwd(), "src/modules/ticketManage"),
+        },
         plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },
     module: {
         strictExportPresence: true,
         rules: [
             {
+                exclude: [
+                    /\.html$/,
+                    /\.(js|jsx)$/,
+                    /\.css$/,
+                    /\.less$/,
+                    /\.json$/,
+                    /\.bmp$/,
+                    /\.gif$/,
+                    /\.jpe?g$/,
+                    /\.png$/,
+                    /\.svg$/,
+                ],
+                loader: require.resolve('file-loader'),
+                options: {
+                    name: 'static/[name].[hash:8].[ext]',
+                }
+                
+            },
+            {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                loader: require.resolve("url-loader"),
+                options: {
+                    limit: 10000,
+                    name: "static/[name].[hash:8].[ext]"
+                }
+            },
+            {
                 test: /\.(js|jsx)$/,
                 include: paths.appSrc,
                 loader: require.resolve("babel-loader")
             },
             {
-                test:/\.css/,
-                loader: ExtractTextPlugin.extract(
-                    Object.assign({
-                        fallback: require.resolve("style-loader"),
-                        use: [
-                            {
-                                loader: require.resolve("css-loader"),
-                                options: {
-                                    importLoaders: 1
-                                }
-                            },
-                            {
-                                loader: require.resolve("postcss-loader"),
-                                options: {
-                                    ident: "postcss",
-                                    plugins: () => [
-                                        require("postcss-flexbugs-fixes"),
-                                        require("autoprefixer")({
-                                            browsers: [
-                                                ">1%",
-                                                "last 4 versions",
-                                                "Firefox ESR",
-                                                "not ie < 9"
-                                            ],
-                                            flexbox: "no-2009"
-                                        }),
-                                        require("postcss-px2rem")({
-                                            remUnit: 100
-                                        })
-                                    ]
-                                }
-                            }
-                        ],
-                        publicPath: "./"
-                    })
-                )
-
+                test: /\.css/,
+                use: [
+                    require.resolve("style-loader"),
+                    {
+                        loader: require.resolve("css-loader"),
+                        options: {
+                            importLoaders: 1,
+                            //root: path.resolve(paths.appSrc, "images")
+                        }
+                    },
+                    {
+                        loader: require.resolve("postcss-loader"),
+                        options: {
+                            ident: "postcss",
+                            plugins: () => [
+                                require("postcss-flexbugs-fixes"),
+                                require("autoprefixer")({
+                                    browsers: [
+                                        ">1%",
+                                        "last 4 versions",
+                                        "Firefox ESR",
+                                        "not ie < 9"
+                                    ],
+                                    flexbox: "no-2009"
+                                }),
+                                require("postcss-px2rem")({ remUnit: 100 })
+                            ]
+                        }
+                    }
+                ]
             },
             {
                 test: /\.less/,
-                loader: ExtractTextPlugin.extract(
-                    Object.assign({
-                        fallback: require.resolve("style-loader"),
-                        use: [
-                            {
-                                loader: require.resolve("css-loader"),
-                                options: {
-                                    importLoaders: 1
-                                }
-                            },
-                            {
-                                loader: require.resolve("postcss-loader"),
-                                options: {
-                                    ident: "postcss",
-                                    plugins: () => [
-                                        require("postcss-flexbugs-fixes"),
-                                        require("autoprefixer")({
-                                            browsers: [
-                                                ">1%",
-                                                "last 4 versions",
-                                                "Firefox ESR",
-                                                "not ie < 9"
-                                            ],
-                                            flexbox: "no-2009"
-                                        }),
-                                        require("postcss-px2rem")({
-                                            remUnit: 100
-                                        })
-                                    ]
-                                }
-                            },
-                            {
-                                loader: require.resolve("less-loader"), // compiles Less to CSS
-                                options:{
-                                    javascriptEnabled:true,
-                                    modifyVars: {
-                                      "hd": "1px"
-                                    }
-                                  } 
+                use: [
+                    require.resolve("style-loader"),
+                    {
+                        loader: require.resolve("css-loader"),
+                        options: {
+                            url: true,
+                            importLoaders: 1,
+                        }
+                    },
+                    {
+                        loader: require.resolve("postcss-loader"),
+                        options: {
+                            ident: "postcss",
+                            plugins: () => [
+                                require("postcss-flexbugs-fixes"),
+                                require("autoprefixer")({
+                                    browsers: [
+                                        ">1%",
+                                        "last 4 versions",
+                                        "Firefox ESR",
+                                        "not ie < 9"
+                                    ],
+                                    flexbox: "no-2009"
+                                }),
+                                require("postcss-px2rem")({ remUnit: 100 })
+                            ]
+                        }
+                    },
+                    {
+                        loader: require.resolve("less-loader"), // compiles Less to CSS
+                        options: {
+                            javascriptEnabled: true,
+                            modifyVars: {
+                                hd: "1px"
                             }
-                        ],
-                        publicPath: "./"
-                    })
-                )
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -139,11 +157,36 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin({
             filename: "css/main.css"
-        })
+        }),
+        new WebpackParallelUglifyPlugin({
+            uglifyJS: {
+              output: {
+                beautify: false, //不需要格式化
+                comments: false //不保留注释
+              },
+              compress: {
+                warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
+                drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+                collapse_vars: true, // 内嵌定义了但是只用到一次的变量
+                reduce_vars: true // 提取出出现多次但是没有定义成变量去引用的静态值
+              }
+            }
+          })
+      
+
     ],
-    optimization: {
-        minimize: true
-    },
+
+    /* optimization: {
+        minimize: true,
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                mangle: false,
+                output: {
+                    beautify: true,
+                },
+            }
+        }),
+    }, */
     node: {
         dgram: "empty",
         fs: "empty",

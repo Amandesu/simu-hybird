@@ -1,9 +1,16 @@
 
 import React from "react";
+import { Route, Switch } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../../actions/homeAction";
+import { FooterTab } from "ticketManage/component";
+import Loadable from "react-loadable";
 import "./index.less";
+
+const RecoverList = Loadable({loader: () => import('../recoverList'), loading: () => <div></div>});
+const OrderList = Loadable({loader: () => import('../orderList'), loading: () => <div></div>});
+const User = Loadable({loader: () => import('../user'), loading: () => <div></div>});
 
 const prefix = "ticketManage-home";
 @connect(
@@ -15,10 +22,16 @@ const prefix = "ticketManage-home";
 export default class Home extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps){
     }
+    state = {
+        activePage: "recover"
+    }
     componentDidMount(){
         this.props.changeData({
             list:[1,2,3]
         })
+    }
+    getList(){
+
     }
     render(){
         const { state, props } = this;
@@ -26,10 +39,31 @@ export default class Home extends React.Component {
             <div className={prefix}>
                 <div className="container">
                     <div className="content">
-                        
+                         <Switch>
+                            <Route path="/ticketManage" exact 
+                                render={(props) => {
+                                    return <RecoverList />
+                                }}
+                            />
+                            <Route path="/ticketManage/orderList" exact 
+                                render={(props) => {
+                                    return <OrderList />
+                                }}
+                            />
+                            <Route path="/ticketManage/user" exact 
+                                render={(props) => {
+                                    return <User />
+                                }}
+                            />
+                            <Route path="/ticketManage" exact 
+                                render={(props) => {
+                                    return <RecoverList />
+                                }}
+                            />
+                         </Switch>
                     </div>
                     <div className="footer">
-
+                        <FooterTab />
                     </div>
                 </div>
                 

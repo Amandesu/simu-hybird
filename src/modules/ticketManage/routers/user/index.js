@@ -7,7 +7,7 @@ import "./index.less";
 
 @connect(
     (state) => ({
-        RecoverList: state.TicketManage_RecoverList
+        RecoverList: state.TicketManage_User
     }), 
     (dispatch) => bindActionCreators(actions)
 )
@@ -19,7 +19,7 @@ export default class RecoverList extends React.Component {
     }
     render(){
         return (
-            <div className="RecoverList">RecoverList</div>
+            <div className="User">User</div>
         )
     }
 }

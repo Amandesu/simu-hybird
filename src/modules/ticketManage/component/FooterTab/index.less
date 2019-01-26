@@ -1,0 +1,41 @@
+@prefix:~"ticketManage-component-FooterTab";
+
+.@{prefix}{
+    height: 56px;
+    background: #E8E8E8;
+    display: flex;
+    width: 100%;
+    >.recover, >.order, >.user{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        >.icon{
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+        }
+        >.text{
+            font-size: 12px;
+        }
+    }
+    >.recover>.icon{
+        background-image: url("~images/recover.png");
+    }
+    >.recover.active{
+        >.icon{ background-image: url("~images/recover_active.png");}
+        >.text{ color:#17abe3 }
+    }
+    >.order>.icon{ background-image: url("~images/order.png"); }
+    >.order.active{
+        >.icon{ background-image: url("~images/order_active.png"); }
+        >.text{ color:#17abe3 }
+    }
+    >.user>.icon{ background-image: url("~images/user.png"); }
+    >.user.active{
+        >.icon{  background-image: url("~images/user_active.png");}
+        >.text{ color:#17abe3 }
+    }
+}
+    

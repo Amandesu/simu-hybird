@@ -9,32 +9,11 @@ import Loadable from "react-loadable"
 const Home = Loadable({
     loader: () => import('./routers/home'), loading: () => <div></div>
 });
-const RecoverList = Loadable({
-    loader: () => import('./routers/recoverList'), loading: () => <div></div>
-}); 
-const RecoverDetail = Loadable({
-    loader: () => import('./routers/recoverDetail'), loading: () => <div></div>
-});
 
 let routers = (props) => {
     return (
         <Switch>
-            <Route path="/ticketManage/home" exact 
-                render={(props) => {
-                    return <Home />
-                }}
-            />
-            <Route path="/ticketManage/recoverList" exact 
-                render={(props) => {
-                    return <RecoverList />
-                }}
-            />
-            <Route path="/ticketManage/recoverDetail" exact 
-                render={(props) => {
-                    return <RecoverDetail />
-                }}
-            />
-            <Route path="/ticketManage" exact 
+            <Route path="/ticketManage" 
                 render={(props) => {
                     return <Home />
                 }}

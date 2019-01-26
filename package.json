@@ -41,8 +41,10 @@
         "react-dev-utils": "^7.0.1",
         "react-hot-loader": "^4.6.3",
         "style-loader": "^0.23.1",
+        "url-loader": "^1.1.2",
         "webpack": "^4.29.0",
-        "webpack-dev-server": "^3.1.14"
+        "webpack-dev-server": "^3.1.14",
+        "webpack-parallel-uglify-plugin": "^1.1.0"
     },
     "scripts": {
         "start": "node scripts/start.js module=simu",

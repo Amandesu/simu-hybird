@@ -4,15 +4,16 @@ if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = "development";
 }
 const webpack = require("webpack");
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const paths = require("./paths");
 
 const fs = require("fs");
 
+
 module.exports = {
-    mode: 'development',
+    mode: "development",
     devtool: "cheap-module-source-map",
     entry: [
         paths.appIndexJs,
@@ -37,86 +38,118 @@ module.exports = {
             (process.env.NODE_PATH || "").split(path.delimiter).filter(Boolean)
         ),
         extensions: [".js", ".json", ".jsx"],
-        alias: {},
+        alias: {
+            images: path.resolve(process.cwd(), "src/images"),
+            ticketManage:path.resolve(process.cwd(), "src/modules/ticketManage"),
+        },
         plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },
     module: {
         strictExportPresence: true,
         rules: [
             {
+                exclude: [
+                    /\.html$/,
+                    /\.(js|jsx)$/,
+                    /\.css$/,
+                    /\.less$/,
+                    /\.json$/,
+                    /\.bmp$/,
+                    /\.gif$/,
+                    /\.jpe?g$/,
+                    /\.png$/,
+                    /\.svg$/,
+                ],
+                loader: require.resolve('file-loader'),
+                options: {
+                    name: 'static/[name].[hash:8].[ext]',
+                }
+                
+            },
+            {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                loader: require.resolve("url-loader"),
+                options: {
+                    limit: 10000,
+                    name: "static/[name].[hash:8].[ext]"
+                }
+            },
+            {
                 test: /\.(js|jsx)$/,
                 include: paths.appSrc,
-                loader:require.resolve('babel-loader')
-            }, {
-                test:/\.css/,
-                use:[
-                    require.resolve('style-loader'),
+                loader: require.resolve("babel-loader")
+            },
+            {
+                test: /\.css/,
+                use: [
+                    require.resolve("style-loader"),
                     {
-                        loader: require.resolve('css-loader'),
+                        loader: require.resolve("css-loader"),
                         options: {
-                            importLoaders: 1
+                            importLoaders: 1,
+                            //root: path.resolve(paths.appSrc, "images")
                         }
                     },
                     {
-                        loader:require.resolve('postcss-loader'),
+                        loader: require.resolve("postcss-loader"),
                         options: {
-                            ident: 'postcss',
+                            ident: "postcss",
                             plugins: () => [
-                                require('postcss-flexbugs-fixes'),
-                                require('autoprefixer')({
+                                require("postcss-flexbugs-fixes"),
+                                require("autoprefixer")({
                                     browsers: [
-                                        '>1%',
-                                        'last 4 versions',
-                                        'Firefox ESR',
-                                        'not ie < 9',
+                                        ">1%",
+                                        "last 4 versions",
+                                        "Firefox ESR",
+                                        "not ie < 9"
                                     ],
-                                    flexbox: 'no-2009',
+                                    flexbox: "no-2009"
                                 }),
                                 require("postcss-px2rem")({ remUnit: 100 })
                             ]
                         }
                     }
                 ]
-
-            }, {
-                test:/\.less/,
-                use:[
-                    require.resolve('style-loader'),
+            },
+            {
+                test: /\.less/,
+                use: [
+                    require.resolve("style-loader"),
                     {
-                        loader: require.resolve('css-loader'),
+                        loader: require.resolve("css-loader"),
                         options: {
-                            importLoaders: 1
+                            url: true,
+                            importLoaders: 1,
                         }
                     },
                     {
-                        loader:require.resolve('postcss-loader'),
+                        loader: require.resolve("postcss-loader"),
                         options: {
-                            ident: 'postcss',
+                            ident: "postcss",
                             plugins: () => [
-                                require('postcss-flexbugs-fixes'),
-                                require('autoprefixer')({
+                                require("postcss-flexbugs-fixes"),
+                                require("autoprefixer")({
                                     browsers: [
-                                        '>1%',
-                                        'last 4 versions',
-                                        'Firefox ESR',
-                                        'not ie < 9',
+                                        ">1%",
+                                        "last 4 versions",
+                                        "Firefox ESR",
+                                        "not ie < 9"
                                     ],
-                                    flexbox: 'no-2009',
+                                    flexbox: "no-2009"
                                 }),
                                 require("postcss-px2rem")({ remUnit: 100 })
                             ]
                         }
                     },
                     {
-                        loader: require.resolve('less-loader'), // compiles Less to CSS
-                        options:{
-                          javascriptEnabled:true,
-                          modifyVars: {
-                            "hd": "1px"
-                          }
-                        } 
+                        loader: require.resolve("less-loader"), // compiles Less to CSS
+                        options: {
+                            javascriptEnabled: true,
+                            modifyVars: {
+                                hd: "1px"
+                            }
+                        }
                     }
-                    
                 ]
             }
         ]
@@ -127,7 +160,7 @@ module.exports = {
             template: paths.appHtml
         }),
         new webpack.NamedModulesPlugin(),
-        //new webpack.DefinePlugin(env.stringified),  
+        //new webpack.DefinePlugin(env.stringified),
         new webpack.HotModuleReplacementPlugin()
     ],
     // Some libraries import Node modules but don't use them in the browser.
