@@ -21,7 +21,7 @@ let routers = (props) => {
         <Switch>
             <Route path="/ticketManage/home" exact 
                 render={(props) => {
-                    return <RecoverList />
+                    return <Home />
                 }}
             />
             <Route path="/ticketManage/recoverList" exact 
@@ -36,7 +36,7 @@ let routers = (props) => {
             />
             <Route path="/ticketManage" exact 
                 render={(props) => {
-                    return <RecoverList />
+                    return <Home />
                 }}
             />
         </Switch>

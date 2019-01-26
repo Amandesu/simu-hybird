@@ -1,15 +1,14 @@
 import {  handleActions } from 'redux-actions';
 
 
-export const TicketManage_HOME = handleActions(
+export const TicketManage_Home = handleActions(
     {
-        ["TICKETMANAGE_HOME__CHANEGE"]: (state, payload )=> {
-           
-            return state;
+        ["TICKETMANAGE_HOME__CHANEGE"]: (state, action )=> {
+            return { ...state,...action.payload };
         }
     },
     {
-        data:[]
+        list:[]
     }
 )
 

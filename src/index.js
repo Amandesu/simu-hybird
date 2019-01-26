@@ -7,8 +7,9 @@ import rootReduces from "./main/reduces";
 
 import "./index.less";
 const store = createStore(rootReduces, {})
-
-
+store.subscribe(data => {
+    console.log(store.getState())
+})
 class App extends React.Component {
     render(){
         return (
