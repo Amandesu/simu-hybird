@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../../actions/homeAction";
 import { FooterTab } from "ticketManage/component";
+import { Helmet } from "react-helmet";
 import Loadable from "react-loadable";
 import "./index.less";
 
@@ -37,27 +38,30 @@ export default class Home extends React.Component {
         const { state, props } = this;
         return (
             <div className={prefix}>
+                <Helmet>
+                    <title>思慕权益</title>
+                </Helmet>
                 <div className="container">
                     <div className="content">
                          <Switch>
                             <Route path="/ticketManage" exact 
                                 render={(props) => {
-                                    return <RecoverList />
+                                    return <RecoverList {...props}/>
                                 }}
                             />
                             <Route path="/ticketManage/orderList" exact 
                                 render={(props) => {
-                                    return <OrderList />
+                                    return <OrderList {...props}/>
                                 }}
                             />
                             <Route path="/ticketManage/user" exact 
                                 render={(props) => {
-                                    return <User />
+                                    return <User {...props}/>
                                 }}
                             />
                             <Route path="/ticketManage" exact 
                                 render={(props) => {
-                                    return <RecoverList />
+                                    return <RecoverList {...props}/>
                                 }}
                             />
                          </Switch>

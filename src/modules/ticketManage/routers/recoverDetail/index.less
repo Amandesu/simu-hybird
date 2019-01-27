@@ -1,0 +1,107 @@
+@prefix:~"ticketManage-recoverDetail";
+
+.@{prefix}{
+    background: #E2E2E2;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    &-content{
+        overflow: scroll;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .detail{
+            padding: 8px 20px;
+            border-bottom: 1px solid #CECECE;
+            background: #FFF;
+        }
+        .notice{
+            padding: 0 0 16px 20px;
+            background: #FFF;
+            .title{
+                height: 30px;
+                line-height: 30px;
+                color:#535353;
+                font-size: 12px;
+                border-bottom: 1px solid #CECECE;
+            }
+            .content{
+                padding-top: 10px;
+                padding-right: 12px;
+                li{
+                    line-height: 20px;
+                }
+            }
+        }
+        .messageWrite{
+            margin-top: 10px;
+            padding: 0 0 16px 20px;
+            background: #FFF;
+            .title{
+                height: 30px;
+                line-height: 30px;
+                color:#535353;
+                font-size: 12px;
+                border-bottom: 1px solid #CECECE;
+            }
+            .ticketInput{
+                padding:12px 12px 12px 0;
+                display: flex;
+                align-items: center;
+                .text{
+                    font-size: 12px;
+                    color:#101010;
+                    width: 60px;
+                }
+                input{
+                    flex: 1;
+                    height: 30px;
+                    border: 1px solid rgb(187, 187, 187);
+                    padding-left: 6px;
+                    &::-webkit-input-placeholder {
+                             color: rgb(187, 187, 187);
+                    }
+
+                }
+            }
+            .ticketUpload{
+                padding:12px 12px 12px 0;
+                display: flex;
+                align-items: center;
+                .text{
+                    font-size: 12px;
+                    color:#101010;
+                    width: 60px;
+                    flex:  0 0 auto;
+                }
+                .imagesList{
+                    width: calc(~"100vw - 92px");
+                    .am-image-picker-list{
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .am-flexbox-item{
+                        width: 45px;
+                        flex: 0 0 auto !important;
+                    }
+                    .am-flexbox{
+                        flex-wrap: wrap;
+                    }
+                }
+            }
+        }
+    }
+    &-footer{
+        flex: 0 0 auto;
+        height: 48px;
+        line-height: 48px;
+        background: #40A9E2;
+        color:#FFF;
+        font-size: 16px;
+        text-align: center;
+    }
+    
+}
