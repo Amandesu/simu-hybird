@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { SearchBar } from "antd-mobile";
 import { Helmet } from "react-helmet";
+import { FooterTab } from "ticketManage/component";
 import * as actions from "../../actions/ticketListAction";
 import "./index.less";
 
@@ -104,6 +105,9 @@ export default class RecoverList extends React.Component {
                     })}
                     
                     
+                </div>
+                <div className="footer">
+                    <FooterTab />
                 </div>
             </div>
         )

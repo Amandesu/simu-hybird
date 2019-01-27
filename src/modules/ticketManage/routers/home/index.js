@@ -63,9 +63,6 @@ export default class Home extends React.Component {
                             />
                          </Switch>
                     </div>
-                    <div className="footer">
-                        <FooterTab />
-                    </div>
                 </div>
                 
             </div>
