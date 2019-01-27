@@ -38,13 +38,10 @@ export default class Home extends React.Component {
         const { state, props } = this;
         return (
             <div className={prefix}>
-                <Helmet>
-                    <title>思慕权益</title>
-                </Helmet>
                 <div className="container">
                     <div className="content">
                          <Switch>
-                            <Route path="/ticketManage" exact 
+                            <Route path="/ticketManage/recoverList" exact 
                                 render={(props) => {
                                     return <RecoverList {...props}/>
                                 }}

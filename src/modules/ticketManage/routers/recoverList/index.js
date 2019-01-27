@@ -3,6 +3,7 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actions from "../../actions/ticketListAction";
+import { Helmet } from "react-helmet";
 import { RecoverItem } from "ticketManage/component"
 import "./index.less";
 
@@ -24,6 +25,9 @@ export default class RecoverList extends React.Component {
         const list = [1, 2, 3, 4, 5, 6, 7];
         return (
             <div className={prefix}>
+                <Helmet>
+                    <title>思慕权益</title>
+                </Helmet>
                 <div className="declaration">
                     <div className="title">公告</div>
                     <div className="content">
@@ -35,9 +39,9 @@ export default class RecoverList extends React.Component {
                     <div className="title">回收列表</div>
 
                     <div className="list">
-                        {list.map(() => {
+                        {list.map((_, index) => {
                             return (
-                                <div className="item">
+                                <div className="item" key={index}>
                                     <RecoverItem 
                                         onClick={() => this.props.history.push("/ticketManage/recoverDetail")}
                                     />

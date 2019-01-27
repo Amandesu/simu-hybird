@@ -12,10 +12,18 @@ const Home = Loadable({
 const RecoverDetail = Loadable({
     loader: () => import('./routers/recoverDetail'), loading: () => <div></div>
 });
+const OrderSearch = Loadable({
+    loader: () => import('./routers/orderSearch'), loading: () => <div></div>
+});
 
 let routers = (props) => {
     return (
         <Switch>
+            <Route path="/ticketManage/orderSearch" 
+                render={(props) => {
+                    return <OrderSearch />
+                }}
+            />
             <Route path="/ticketManage/recoverDetail" 
                 render={(props) => {
                     return <RecoverDetail />

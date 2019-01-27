@@ -34,6 +34,17 @@ export const TicketManage_RecoverList = handleActions(
     }
 )
 
+export const TicketManage_OrderList = handleActions(
+    {
+        ["TICKETMANAGE_ORDERLIST_CHANGE"]: (state, action )=> {
+            return { ...state,...action.payload };
+        }
+    },
+    {
+        status:"1" 
+    }
+)
+
 export {
     TicketManage_Component_FooterTab
 } from "./component/reduce"

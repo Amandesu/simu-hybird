@@ -2,14 +2,19 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { SearchBar } from "antd-mobile";
+import { Helmet } from "react-helmet";
 import * as actions from "../../actions/ticketListAction";
 import "./index.less";
 
+const prefix = "ticketManage-orderList";
 @connect(
     (state) => ({
-        RecoverList: state.TicketManage_OrderList
+        OrderList: state.TicketManage_OrderList
     }), 
-    (dispatch) => bindActionCreators(actions)
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_ORDERLIST_CHANGE",payload})
+    }, dispatch)
 )
 export default class RecoverList extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps){
@@ -18,8 +23,34 @@ export default class RecoverList extends React.Component {
     componentDidMount(){
     }
     render(){
+        const { state, props } = this;
+        const OrderList = props.OrderList;
+        const isActive = (status) => OrderList.status == status ? "active":"";
         return (
-            <div className="OrderList">OrderList</div>
+            <div className={prefix}>
+                <Helmet>
+                    <title>思慕权益-订单</title>
+                </Helmet>
+                <div className={prefix+"-header"}>
+                    <div className="search" onClick={() => this.props.history.push("/ticketManage/orderSearch")}>
+                        <SearchBar
+                            placeholder="查询"
+                            ref={ref => this.manualFocusInst = ref}
+                            disabled={true}
+                        />
+                    </div>
+                    <div className="tabs">
+                        <div className={`tabItem ${isActive("1")}`} onClick={() => this.props.changeData({status:"1"})}>全部</div>
+                        <div className={`tabItem ${isActive("2")}`} onClick={() => this.props.changeData({status:"2"})}>核验中</div>
+                        <div className={`tabItem ${isActive("3")}`} onClick={() => this.props.changeData({status:"3"})}>有效券码</div>
+                        <div className={`tabItem ${isActive("4")}`} onClick={() => this.props.changeData({status:"4"})}>无效券码</div>
+                    </div>
+                </div>
+                <div className={prefix+"-list"}>
+                    <div className="search"></div>
+                    
+                </div>
+            </div>
         )
     }
 }

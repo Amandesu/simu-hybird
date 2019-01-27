@@ -1,0 +1,48 @@
+@prefix:~"ticketManage-orderList";
+
+.@{prefix}{
+    height: 100%;
+    display: flex;
+    background: #E1E1E1;
+    &-header{
+        width: 100%;
+        background: #FFF;
+        min-height: 85px;
+        flex: 0 0 auto;
+        .search{
+            box-sizing: border-box;
+            .am-search{
+                background: #FFF;
+            }
+            .am-search-input{
+                border: 1px solid rgb(187, 187, 187);
+            }
+        }
+        .tabs {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgb(187, 187, 187);
+            border-top: 1px solid rgb(187, 187, 187);
+            .tabItem{
+                flex: 1;
+                text-align: center;
+                color:#B3B3B3;
+                height: 100%;
+                line-height: 40px;
+            }
+            .tabItem.active{
+                color:#17abe3
+            }
+
+        }
+    }
+    &-list{
+        overflow: scroll;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
