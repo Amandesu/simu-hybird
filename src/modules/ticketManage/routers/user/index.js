@@ -24,6 +24,7 @@ export default class RecoverList extends React.Component {
                 <Helmet>
                     <title>思慕权益-我的</title>
                 </Helmet>
+                我的
             </div>
         )
     }

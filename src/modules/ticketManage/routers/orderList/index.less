@@ -3,11 +3,12 @@
 .@{prefix}{
     height: 100%;
     display: flex;
-    background: #E1E1E1;
+    background: #EFEFF4;
+    flex-direction: column;
     &-header{
         width: 100%;
         background: #FFF;
-        min-height: 85px;
+        height: 85px;
         flex: 0 0 auto;
         .search{
             box-sizing: border-box;
@@ -22,12 +23,12 @@
             height: 40px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid rgb(187, 187, 187);
-            border-top: 1px solid rgb(187, 187, 187);
+            border-bottom: 1px solid #BBBBBB;
+            border-top: 1px solid #BBBBBB;
             .tabItem{
                 flex: 1;
                 text-align: center;
-                color:#B3B3B3;
+                color:#8F8F95;
                 height: 100%;
                 line-height: 40px;
             }
@@ -43,6 +44,74 @@
         -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar {
             display: none;
+        }
+        padding-bottom: 8px;
+        .item{
+            background: #FFF;
+            padding: 16px 10px 16px 16px;
+            margin-top: 8px;
+            .header{
+                height: 23px;
+                display: flex;
+                justify-content: space-between;
+                
+                .title{
+                    overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                    width: 60%;
+                    flex:0 0 auto;
+                    font-size: 16px;
+                    color: #494949;
+                    font-weight: 500;
+                }
+                .status{
+                    font-size: 14px;
+                    
+
+                    &.validate{
+                        color: #F58F3E;
+                    }
+                    &.invalid{
+                        color:#8F8F95;
+                    }
+                    &.checking{
+                        color:#ff4d4f;
+                    }
+                }
+            }
+            .date{
+                font-size: 11px;
+                color: #8F8F95;
+                line-height: 15px;
+                margin-top: 5px;
+            }
+            .footer{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .ticketCode{
+                    overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                    width: 80%;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    color: #494949;
+                    img{
+                        height: 16px;
+                        width: 16px;
+                        margin-right: 4px;
+                        vertical-align: middle;
+                    }
+                }
+                .price{
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: #494949;
+                }
+            }
+            
         }
     }
 }
