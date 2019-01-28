@@ -3,7 +3,7 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
-import { List, InputItem } from "antd-mobile";
+import { List, InputItem, ImagePicker, Modal } from "antd-mobile";
 import * as actions from "../../actions/ticketListAction";
 import "./index.less";
 
@@ -20,7 +20,14 @@ const prefix = "ticketManage-creditSetting";
 export default class CreditSetting extends React.Component {
     state = {
         name:"",
-        phone:""
+        phone:"",
+        files:[{
+            url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
+            id: '2121',
+          }, {
+            url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+            id: '2122',
+          }]
     }
     componentDidMount(){
         this.autoFocusInst && this.autoFocusInst.focus();
@@ -42,7 +49,15 @@ export default class CreditSetting extends React.Component {
                         >手机号码</InputItem>
                          <InputItem clear placeholder="上传支付宝的本人收款二维码" disabled className="qrcode" value={state.phone} onChange={phone => this.setState({phone})}
                         >上传二维码</InputItem>
-
+                        <div className="imagesList">
+                                <ImagePicker
+                                     files={state.files}
+                                     onChange={this.onChange}
+                                     onImageClick={(index, fs) => console.log(index, fs)}
+                                     selectable={state.files.length < 9}
+                                     accept="image/gif,image/jpeg,image/jpg,image/png"
+                                />
+                            </div>
 
                     </List>
                 </div>
