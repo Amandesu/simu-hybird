@@ -12,7 +12,9 @@ const prefix = "ticketManage-component-FooterTab";
         FooterTab: state.TicketManage_Component_FooterTab
     }), 
     (dispatch) => bindActionCreators({
-        changeData:(payload) => ({type:"TICKETMANAGE_FOFOOTERTAB__CHANEGE",payload})
+        changeData:(payload) => ({type:"TICKETMANAGE_FOFOOTERTAB__CHANEGE",payload}),
+        // 切换底部tab，要清除orderList中的数据
+        clearOrderList: (payload) => ({type:"TICKETMANAGE_ORDERLIST_CLEAR"})
     }, dispatch)
 )
 class RecoverList extends React.Component {
@@ -29,7 +31,10 @@ class RecoverList extends React.Component {
     changeTab(activePage){
         if (this.props.FooterTab.activePage != activePage) {
             this.props.changeData({activePage});
-            this.props.history.push(`/ticketManage/${activePage}`);
+            // 初始化数据
+            this.props.clearOrderList()
+
+            this.props.history.push(`/ticketManage/${activePage}`);  
         }
     }
     isActive(page){

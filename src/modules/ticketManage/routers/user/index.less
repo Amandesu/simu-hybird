@@ -1,3 +1,52 @@
-.mmmmmuser{
-    color:red
+@prefix:~"ticketManage-user";
+
+.@{prefix}{
+    height: 100vh;
+    display: flex;
+    background: #FFFFFF;
+    flex-direction: column;
+    >.content{
+        overflow: scroll;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        align-items: center;
+
+        .poster{
+            height: 150px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            //border-bottom: 1px solid #dddddd;
+            >div.img{
+                height: 75px;
+                width: 75px;
+                border-radius: 75px;
+                background-color: #EFEFF4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 50%; height: 50%;
+                }
+
+            }
+            >.text{
+                margin-top: 10px;
+                color:#494949;
+                font-size: 14px;
+            }
+        }
+        .am-list{
+            .am-list-content{
+                font-size: 14px !important;
+            }
+        }
+    }
+    >.footer{
+        flex: 0 0 auto;
+    }
 }

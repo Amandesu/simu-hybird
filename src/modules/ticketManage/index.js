@@ -15,6 +15,13 @@ const RecoverDetail = Loadable({
 const OrderSearch = Loadable({
     loader: () => import('./routers/orderSearch'), loading: () => <div></div>
 });
+const CreditSetting = Loadable({
+    loader: () => import('./routers/creditSetting'), loading: () => <div></div>
+});
+const AboutSimu = Loadable({
+    loader: () => import('./routers/aboutSimu'), loading: () => <div></div>
+});
+
 
 let routers = (props) => {
     return (
@@ -27,6 +34,16 @@ let routers = (props) => {
             <Route path="/ticketManage/recoverDetail" 
                 render={(props) => {
                     return <RecoverDetail />
+                }}
+            />
+            <Route path="/ticketManage/creditSetting" 
+                render={(props) => {
+                    return <CreditSetting />
+                }}
+            />
+            <Route path="/ticketManage/aboutSimu" 
+                render={(props) => {
+                    return <AboutSimu />
                 }}
             />
             <Route path="/ticketManage" 

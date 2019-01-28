@@ -57,7 +57,7 @@
                 }
                 
             }
-            >.buttom{
+            >.button{
                 width: 72px;
                 flex:0 0 auto;
                 height: 36px;
@@ -67,11 +67,50 @@
                 background: #10A1F1;
                 color:white;
                 border-radius: 4px;
+                font-size: 14px;
             }
         }
         >.searchDate{
             &.disable{
                 display: none;
+            }
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            &>div{
+                flex:1;
+            }
+            >span{
+                margin-right: 5px;
+                margin-left: 5px;
+            }
+            .startDate, .endDate{
+                width: 100%;
+                line-height: 36px;
+                height: 36px;
+                text-align: center;
+                color:#8f8f95;
+                font-size: 14px;
+                border: 1px solid #BBBBBB;
+                border-radius: 4px;
+            }
+            .startDate{
+                margin-right: 5px;
+            }
+            >.endDate{
+                margin-left: 5px;
+            }
+            >.button{
+                font-size: 14px;
+                width: 72px;
+                flex:0 0 auto;
+                height: 36px;
+                margin-left: 8px;
+                line-height: 36px;
+                text-align: center;
+                background: #10A1F1;
+                color:white;
+                border-radius: 4px;
             }
         }
     }

@@ -14,7 +14,8 @@ const prefix = "ticketManage-orderList";
         OrderList: state.TicketManage_OrderList
     }), 
     (dispatch) => bindActionCreators({
-        changeData:(payload) => ({type:"TICKETMANAGE_ORDERLIST_CHANGE",payload})
+        changeData:(payload) => ({type:"TICKETMANAGE_ORDERLIST_CHANGE",payload}),
+        clearData: (payload) => ({type:"TICKETMANAGE_ORDERLIST_CLEAR",payload})
     }, dispatch)
 )
 export default class RecoverList extends React.Component {
@@ -79,7 +80,7 @@ export default class RecoverList extends React.Component {
                             <OrderItem item={item} className="item"/>
                         )
                     })}
-                    
+    
                     
                 </div>
                 <div className="footer">
