@@ -38,33 +38,28 @@ export default class Home extends React.Component {
         const { state, props } = this;
         return (
             <div className={prefix}>
-                <div className="container">
-                    <div className="content">
-                         <Switch>
-                            <Route path="/ticketManage/recoverList" exact 
-                                render={(props) => {
-                                    return <RecoverList {...props}/>
-                                }}
-                            />
-                            <Route path="/ticketManage/orderList" exact 
-                                render={(props) => {
-                                    return <OrderList {...props}/>
-                                }}
-                            />
-                            <Route path="/ticketManage/user" exact 
-                                render={(props) => {
-                                    return <User {...props}/>
-                                }}
-                            />
-                            <Route path="/ticketManage" exact 
-                                render={(props) => {
-                                    return <RecoverList {...props}/>
-                                }}
-                            />
-                         </Switch>
-                    </div>
-                </div>
-                
+                <Switch>
+                    <Route path="/ticketManage/recoverList" exact 
+                        render={(props) => {
+                            return <RecoverList {...props}/>
+                        }}
+                    />
+                    <Route path="/ticketManage/orderList" exact 
+                        render={(props) => {
+                            return <OrderList {...props}/>
+                        }}
+                    />
+                    <Route path="/ticketManage/user" exact 
+                        render={(props) => {
+                            return <User {...props}/>
+                        }}
+                    />
+                    <Route path="/ticketManage" exact 
+                        render={(props) => {
+                            return <RecoverList {...props}/>
+                        }}
+                    />
+                </Switch>
             </div>
         )
     }

@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { SearchBar } from "antd-mobile";
 import { Helmet } from "react-helmet";
-import { FooterTab } from "ticketManage/component";
+import { FooterTab, OrderItem } from "ticketManage/component";
 import * as actions from "../../actions/ticketListAction";
 import "./index.less";
 
@@ -52,14 +52,7 @@ export default class RecoverList extends React.Component {
             status:"4"
         }]
         list = list.filter(item => OrderList.status == "1" ||item.status == OrderList.status);
-        const getStatusConf = (status) => {
-            let map = new Map([ 
-                ["2", {cls: "checking", name: "核验中"}],
-                ["3", {cls: "validate", name: "有效"}],
-                ["4", {cls: "invalid", name: "无效"}],
-            ])
-            return map.get(status);
-        }
+       
         return (
             <div className={prefix}>
                 <Helmet>
@@ -82,25 +75,8 @@ export default class RecoverList extends React.Component {
                 </div>
                 <div className={prefix+"-list"}>
                     {list.map((item) => {
-                        let statusConf = getStatusConf(item.status);
                         return (
-                            <div className="item">
-                                <div className="header">
-                                    <div className="title">星巴克大杯--中信（库存多库存多库存多库存多)</div>
-                                    <div className={`status ${statusConf.cls}`}>{statusConf.name}</div>
-                                </div>
-                                <div className="date">
-                                    2017-04-19 12:24
-                                </div>
-                                <div className="footer">
-                                    <div className="ticketCode">
-                                        <img src={require("images/qrcode.png")}/> 36254125412
-                                    </div>
-                                    <div className="price">
-                                        ￥120
-                                    </div>
-                                </div>
-                            </div>
+                            <OrderItem item={item} className="item"/>
                         )
                     })}
                     
