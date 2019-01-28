@@ -32,6 +32,12 @@ export default class CreditSetting extends React.Component {
     componentDidMount(){
         this.autoFocusInst && this.autoFocusInst.focus();
     }
+    onChange = (files, type, index) => {
+        console.log(files, type, index);
+        this.setState({
+          files,
+        });
+      }
     render(){
         const { state, props } = this;
        
