@@ -72,7 +72,7 @@ export default class RecoverList extends React.Component {
                                     <div className="item" key={index}>
                                         <RecoverItem
                                             item = {item}
-                                            onClick={() => this.props.history.push("/ticketManage/recoverDetail")}
+                                            onClick={() => this.props.history.push(`/ticketManage/recoverDetail?voucherId=${item.id}`)}
                                         />
                                     </div>
                                 )

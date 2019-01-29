@@ -42,7 +42,6 @@ export default class RecoverList extends React.Component {
         })
     }
     render(){
-        console.log(11)
         const { state, props } = this;
         const OrderList = props.OrderList;
         const isActive = (status) => OrderList.status == status ? "active":"";

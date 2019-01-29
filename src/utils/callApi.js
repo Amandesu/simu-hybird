@@ -14,17 +14,27 @@ function jsonFormData(json){
     return formData;
 
 }
-const callApi = ({url = "", type = "POST", data = {}}) => {
+function getData(type, data, dataType){
+    if (dataType == "formData") {
+        data = jsonFormData(data); 
+    } 
+    else if (type == "GET" && JSON.stringify(data) == `"{}"`) {
+        data = "";
+    } 
+    else if (type == "POST") {
+        data = JSON.stringify(data)
+    }
+    return data;
+}
+const callApi = ({url = "", type = "POST", data = {}, dataType="json"}) => {
     type = type.toUpperCase();
-    data = JSON.stringify(data);
+    data = getData(type, data, dataType);
 
     let requestHttp = request.post(url);    
     if (type == "GET") {
-        if(JSON.stringify(data) == `"{}"`){
-            data = "";
-        }
         requestHttp = request.get(url).query(data);
     }
+
     let requestComplete = requestHttp
         .set('Content-Type', 'application/json')
         .timeout({deadline:"10000"})
@@ -35,6 +45,7 @@ const callApi = ({url = "", type = "POST", data = {}}) => {
             if (res.status == 200 && res.body && res.body.code == 0) {
                 resolve && resolve(res.body)
             } else {
+                console.log(reject)
                 if (reject) {
                     reject(res)
                 } else {

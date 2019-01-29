@@ -1,8 +1,10 @@
 
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { RecoverItem } from "ticketManage/component"
 import { ImagePicker, Modal } from 'antd-mobile';
+import { callApi, getParamUrl } from "Utils";
 import "./index.less";
 
 const prefix = "ticketManage-recoverDetail";
@@ -10,17 +12,16 @@ const prefix = "ticketManage-recoverDetail";
     (state) => ({
         recoverDetail: state.TicketManage_RecoverDetail
     }), 
-    () => ({
-        getList:dispatch => {
-            return dispatch({type:"Kkk", payload:[12]})
-        }
-    })
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_RECOVERDETAIL_CHANGE",payload}),
+    }, dispatch)
 )
 export default class RecoverDetail extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps){
 
     }
     state = {
+
         files:[{
             url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
             id: '2121',
@@ -29,12 +30,28 @@ export default class RecoverDetail extends React.Component {
             id: '2122',
           }]
     }
+    componentDidMount(){
+        this.getRecoverDetail()
+    }
+    getRecoverDetail(){
+        let params = getParamUrl(this.props.location.search);
+        console.log(params.voucherId)
+        callApi({
+            url:"/simu/wechat/voucherDetail",
+            type:"GET",
+            data: {
+                voucherId:params.voucherId
+            }
+        }).then(res => {
+            console.log(res)
+        })
+    }
     onChange = (files, type, index) => {
         console.log(files, type, index);
         this.setState({
-          files,
+            files,
         });
-      }
+    }
     
     onImageClick(){
 
@@ -45,7 +62,7 @@ export default class RecoverDetail extends React.Component {
             <div className={prefix}>
                 <div className={prefix+"-content"}>
                     <div className="detail">
-                        <RecoverItem />
+                        <RecoverItem item={{voucherTitle:"test", price:"12"}}/>
                     </div>
                     <div className="notice">
                         <div className="title">来源及提醒</div>

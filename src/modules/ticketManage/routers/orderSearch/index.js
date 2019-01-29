@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { DatePicker } from "antd-mobile";
 import { OrderItem } from "ticketManage/component";
+import { NoContent } from "component";
 import { callApi } from "Utils";
 import "./index.less";
 
@@ -58,8 +59,9 @@ export default class OrderSearch extends React.Component {
     }
     onSearchCode = () => {
         this.getOrderList({
-            "voucherNo": this.state.ticketCode
+            voucherNo: this.state.ticketCode
         }).then(res => {
+            this.props.changeData({ loadding:false })
             this.setState({
                 list:res.data.list || [],
                 codeList:res.data.list || []
@@ -67,12 +69,19 @@ export default class OrderSearch extends React.Component {
         })
     }
     onSearchDate(){
-       // if (this.state.ticketCode) {
+        const { state, props } = this;
+        let startTime = +new Date(this.formatDate(new Date(state.startDate), "yyyy-MM-dd 00:00:00"));
+        let endTime = +new Date(this.formatDate(new Date(state.endDate), "yyyy-MM-dd 23:59:59"));
+        this.getOrderList({
+            startTime,
+            endTime
+        }).then(res => {
+            this.props.changeData({ loadding:false })
             this.setState({
-                list:list,
-                dateList:list
+                list:res.data.list || [],
+                dateList:res.data.list || []
             })
-       // }
+        })
     }
     formatDate(date, format="yyyy-MM-dd hh:mm:ss"){
         let y = date.getFullYear(),
@@ -148,6 +157,9 @@ export default class OrderSearch extends React.Component {
                             <OrderItem item={item} className="item" key={index}/>
                         )
                     })}
+                    { !state.list.length && !state.loadding ?
+                        <NoContent text="暂无结果"/>
+                    :""}
                  </div>
             </div>
         )

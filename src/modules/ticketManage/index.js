@@ -35,7 +35,7 @@ let routers = (props) => {
             />
             <Route path="/ticketManage/recoverDetail" 
                 render={(props) => {
-                    return <RecoverDetail />
+                    return <RecoverDetail {...props}/>
                 }}
             />
             <Route path="/ticketManage/creditSetting" 

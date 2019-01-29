@@ -14,8 +14,8 @@ export const TicketManage_Home = handleActions(
 // 回收详情
 export const TicketManage_RecoverDetail = handleActions(
     {
-        ["TICKETMANAGE_RECOVERDETAIL_CHANEGE"]: (state, payload)=>{
-            return state;
+        ["TICKETMANAGE_RECOVERDETAIL_CHANGE"]: (state, payload)=>{
+            return { ...state,...action.payload };
         }
     },
     {
@@ -61,7 +61,8 @@ export const TicketManage_OrderSearch = handleActions(
         }
     },
     {
-        list:[]
+        list:[],
+        loading:false
     }
 )
 // 收款账号设置
@@ -72,7 +73,11 @@ export const TicketManage_CreditSetting = handleActions(
         }
     },
     {
-       // status:"1" 
+       payinfo: {
+            alipayName: "",
+            alipayNo: "",
+            files: []
+       }
     }
 )
 // 公共组件中的reduce

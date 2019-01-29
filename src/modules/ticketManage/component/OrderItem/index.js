@@ -18,18 +18,18 @@ export default function OrderItem(props) {
     return (
         <div className={`${prefix} ${props.className}`}>
             <div className="header">
-                <div className="title">星巴克大杯--中信（库存多库存多库存多库存多)</div>
+                <div className="title">{item.title}</div>
                 <div className={`status ${statusConf.cls}`}>{statusConf.name}</div>
             </div>
             <div className="date">
-                2017-04-19 12:24
+                {item.createTime}
             </div>
             <div className="footer">
                 <div className="ticketCode">
                     <img src={require("images/qrcode.png")}/> 36254125412
                 </div>
                 <div className="price">
-                    ￥120
+                    ￥{item.price}
                 </div>
             </div>
         </div>
