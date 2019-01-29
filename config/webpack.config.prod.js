@@ -177,10 +177,6 @@ module.exports = {
       
 
     ],
-
-    optimization: {
-        minimize: false
-    }, 
     node: {
         dgram: "empty",
         fs: "empty",
