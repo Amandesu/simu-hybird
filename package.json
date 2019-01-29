@@ -16,7 +16,8 @@
         "react-redux": "^6.0.0",
         "react-router-dom": "^4.3.1",
         "redux": "^4.0.1",
-        "redux-actions": "^2.6.4"
+        "redux-actions": "^2.6.4",
+        "superagent": "^4.1.0"
     },
     "devDependencies": {
         "@babel/core": "^7.2.2",
@@ -55,6 +56,7 @@
     },
     "author": "leiwuyi",
     "license": "ISC",
+    "proxy": "http://47.106.206.152",
     "browserslist": [
         ">0.2%",
         "not dead",

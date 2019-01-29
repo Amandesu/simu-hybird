@@ -41,6 +41,7 @@ module.exports = {
         alias: {
             images: path.resolve(process.cwd(), "src/images"),
             ticketManage:path.resolve(process.cwd(), "src/modules/ticketManage"),
+            Utils: path.resolve(process.cwd(), "src/utils")
         },
         plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },

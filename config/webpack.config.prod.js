@@ -34,6 +34,7 @@ module.exports = {
         alias: {
             images: path.resolve(process.cwd(), "src/images"),
             ticketManage:path.resolve(process.cwd(), "src/modules/ticketManage"),
+            "Utils": path.resolve(process.cwd(), "src/utils")
         },
         plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },
@@ -158,7 +159,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: "css/main.css"
         }),
-        new WebpackParallelUglifyPlugin({
+       /*  new WebpackParallelUglifyPlugin({
             uglifyJS: {
               output: {
                 beautify: false, //不需要格式化
@@ -171,22 +172,14 @@ module.exports = {
                 reduce_vars: true // 提取出出现多次但是没有定义成变量去引用的静态值
               }
             }
-          })
+          }) */
       
 
     ],
 
-    /* optimization: {
-        minimize: true,
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                mangle: false,
-                output: {
-                    beautify: true,
-                },
-            }
-        }),
-    }, */
+    optimization: {
+        minimize: false
+    }, 
     node: {
         dgram: "empty",
         fs: "empty",
