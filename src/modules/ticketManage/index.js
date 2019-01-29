@@ -21,7 +21,9 @@ const CreditSetting = Loadable({
 const AboutSimu = Loadable({
     loader: () => import('./routers/aboutSimu'), loading: () => <div></div>
 });
-
+const TestApi = Loadable({
+    loader: () => import('./routers/testApi'), loading: () => <div></div>
+});
 
 let routers = (props) => {
     return (
@@ -44,6 +46,11 @@ let routers = (props) => {
             <Route path="/ticketManage/aboutSimu" 
                 render={(props) => {
                     return <AboutSimu />
+                }}
+            />
+            <Route path="/ticketManage/testApi" 
+                render={(props) => {
+                    return <TestApi />
                 }}
             />
             <Route path="/ticketManage" 

@@ -3,7 +3,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as actions from "../../actions/homeAction";
 import { FooterTab } from "ticketManage/component";
 import { Helmet } from "react-helmet";
 import Loadable from "react-loadable";
@@ -18,21 +17,15 @@ const prefix = "ticketManage-home";
     (state) => ({
         Home: state.TicketManage_Home
     }), 
-    dispatch => bindActionCreators(actions, dispatch)
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_HOME__CHANEGE",payload}),
+    }, dispatch)
 )
 export default class Home extends React.Component {
-    UNSAFE_componentWillReceiveProps(nextProps){
-    }
     state = {
-        activePage: "recover"
     }
     componentDidMount(){
-        this.props.changeData({
-            list:[1,2,3]
-        })
-    }
-    getList(){
-
+        
     }
     render(){
         const { state, props } = this;

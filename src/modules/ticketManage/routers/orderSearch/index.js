@@ -4,8 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { DatePicker } from "antd-mobile";
 import { OrderItem } from "ticketManage/component";
-import * as actions from "../../actions/ticketListAction";
-//import moment from "moment";
+import { callApi } from "Utils";
 import "./index.less";
 
 const prefix = "ticketManage-orderSearch";
@@ -13,7 +12,9 @@ const prefix = "ticketManage-orderSearch";
     (state) => ({
         OrderSearch: state.TicketManage_OrderSearch
     }), 
-    (dispatch) => bindActionCreators(actions)
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_ORDERSEARCH_CHANGE",payload}),
+    }, dispatch)
 )
 export default class OrderSearch extends React.Component {
     state = {
@@ -43,17 +44,29 @@ export default class OrderSearch extends React.Component {
             list
         })
     }
-    onSearchCode(){
-        let list = [{status:"2"}, {status:"3"}, {status:"4"},{status:"2"}, {status:"3"}, {status:"4"},{status:"2"}, {status:"3"}, {status:"4"}]
-        if (this.state.ticketCode) {
+    getOrderList(params = {}){
+        this.props.changeData({ loadding:true })
+        return callApi({
+            url:"/simu/wechat/orderList",
+            type:"POST",
+            data: {
+                "openId": "wenpeng",
+                ...params,
+                
+            }
+        })
+    }
+    onSearchCode = () => {
+        this.getOrderList({
+            "voucherNo": this.state.ticketCode
+        }).then(res => {
             this.setState({
-                list:list,
-                codeList:list
+                list:res.data.list || [],
+                codeList:res.data.list || []
             })
-        }
+        })
     }
     onSearchDate(){
-        let list = [{status:"2"}, {status:"3"}, {status:"4"}]
        // if (this.state.ticketCode) {
             this.setState({
                 list:list,

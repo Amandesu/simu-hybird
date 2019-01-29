@@ -25,13 +25,13 @@ export const TicketManage_RecoverDetail = handleActions(
 // 回收列表
 export const TicketManage_RecoverList = handleActions(
     {
-        ["TICKETMANAGE_RECOVERLIST_CHANGE"]: (state, payload )=> {
-            console.log(payload)
-            return state;
+        ["TICKETMANAGE_RECOVERLIST_CHANGE"]: (state, action )=> {
+            return { ...state,...action.payload };
         }
     },
     {
-        data:[]
+        list:[],
+        noticeMsg:{}
     }
 )
 // 订单列表
@@ -42,12 +42,26 @@ export const TicketManage_OrderList = handleActions(
         },
         ["TICKETMANAGE_ORDERLIST_CLEAR"]: (state, action )=> {
             return {
-                status:"1" 
+                ...state,
+                status:-2
             };
         }
     },
     {
-        status:"1" 
+        status:-2,
+        list:[],
+        loading:false
+    }
+)
+// 订单搜索
+export const TicketManage_OrderSearch = handleActions(
+    {
+        ["TICKETMANAGE_ORDERSEARCH_CHANGE"]: (state, action )=> {
+            return { ...state,...action.payload };
+        }
+    },
+    {
+        list:[]
     }
 )
 // 收款账号设置

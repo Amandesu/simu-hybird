@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { SearchBar } from "antd-mobile";
 import { Helmet } from "react-helmet";
 import { FooterTab, OrderItem } from "ticketManage/component";
-import * as actions from "../../actions/ticketListAction";
+import { NoContent } from "component";
+import { callApi } from "Utils"
 import "./index.less";
 
 const prefix = "ticketManage-orderList";
@@ -19,41 +20,33 @@ const prefix = "ticketManage-orderList";
     }, dispatch)
 )
 export default class RecoverList extends React.Component {
-    UNSAFE_componentWillReceiveProps(nextProps){
-
-    }
     componentDidMount(){
+        this.getOrderList();
+    }
+    // 获取订单列表
+    getOrderList(){
+        this.props.changeData({ loadding:true })
+        callApi({
+            url:"/simu/wechat/orderList",
+            type:"POST",
+            data: {
+                "openId": "wenpeng",
+                //"pageNum": 1,
+                //"pageSize": 10,
+            }
+        }).then(res => {
+            this.props.changeData({
+                list: res.data.list || [],
+                loadding:false
+            })
+        })
     }
     render(){
+        console.log(11)
         const { state, props } = this;
         const OrderList = props.OrderList;
         const isActive = (status) => OrderList.status == status ? "active":"";
-
-        let list = [{
-            status:"2"
-        }, {
-            status:"3"
-        }, {
-            status:"2"
-        },{
-            status:"4"
-        },{
-            status:"3"
-        },{
-            status:"4"
-        },{
-            status:"3"
-        }, {
-            status:"2"
-        },{
-            status:"4"
-        },{
-            status:"3"
-        },{
-            status:"4"
-        }]
-        list = list.filter(item => OrderList.status == "1" ||item.status == OrderList.status);
-       
+        const activeList = OrderList.list.filter(item => item.status == OrderList.status)
         return (
             <div className={prefix}>
                 <Helmet>
@@ -68,18 +61,21 @@ export default class RecoverList extends React.Component {
                         />
                     </div>
                     <div className="tabs">
-                        <div className={`tabItem ${isActive("1")}`} onClick={() => this.props.changeData({status:"1"})}>全部</div>
-                        <div className={`tabItem ${isActive("2")}`} onClick={() => this.props.changeData({status:"2"})}>核验中</div>
-                        <div className={`tabItem ${isActive("3")}`} onClick={() => this.props.changeData({status:"3"})}>有效券码</div>
-                        <div className={`tabItem ${isActive("4")}`} onClick={() => this.props.changeData({status:"4"})}>无效券码</div>
+                        <div className={`tabItem ${isActive(-2)}`} onClick={() => this.props.changeData({status:-2})}>未验</div>
+                        <div className={`tabItem ${isActive(0)}`} onClick={() => this.props.changeData({status:0})}>核验中</div>
+                        <div className={`tabItem ${isActive(1)}`} onClick={() => this.props.changeData({status:1})}>有效券码</div>
+                        <div className={`tabItem ${isActive(-1)}`} onClick={() => this.props.changeData({status:-1})}>无效券码</div>
                     </div>
                 </div>
                 <div className={prefix+"-list"}>
-                    {list.map((item) => {
+                    {activeList.map((item, index) => {
                         return (
-                            <OrderItem item={item} className="item"/>
+                            <OrderItem item={item} className="item" key={index}/>
                         )
                     })}
+                    { !activeList.length && OrderList.loadding == false ?
+                        <NoContent />
+                    : ""}
     
                     
                 </div>

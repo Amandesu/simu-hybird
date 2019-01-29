@@ -5,9 +5,10 @@ import "./index.less";
 const prefix = "ticketManage-component-OrderItem";
 const getStatusConf = (status) => {
     let map = new Map([ 
-        ["2", {cls: "checking", name: "核验中"}],
-        ["3", {cls: "validate", name: "有效"}],
-        ["4", {cls: "invalid", name: "无效"}],
+        [0, {cls: "checking", name: "核验中"}],
+        [1, {cls: "validate", name: "有效"}],
+        [-1, {cls: "invalid", name: "无效"}],
+        [-2, {cls: "no-check", name: "未验"}],
     ])
     return map.get(status);
 }

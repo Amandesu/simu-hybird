@@ -2,10 +2,10 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as actions from "../../actions/ticketListAction";
 import { Helmet } from "react-helmet";
 import { FooterTab } from "ticketManage/component";
 import { RecoverItem } from "ticketManage/component"
+import { callApi } from "Utils"
 import "./index.less";
 
 const prefix = "ticketManage-recoverList";
@@ -14,16 +14,44 @@ const prefix = "ticketManage-recoverList";
     (state) => ({
         RecoverList: state.TicketManage_RecoverList
     }), 
-    (dispatch) => bindActionCreators(actions)
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_RECOVERLIST_CHANGE",payload}),
+    }, dispatch)
 )
 export default class RecoverList extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps){
 
     }
     componentDidMount(){
+        this.getNoticeMsg();
+        this.getRecoverList();
+    }
+    // 获取公共信息
+    getNoticeMsg(){
+        callApi({
+            url:"/simu/wechat/queryNotice",
+            type:"GET",
+        }).then(res => {
+            this.props.changeData({
+                noticeMsg: res.data || {}
+            })
+        })
+    }
+    // 获取回收列表
+    getRecoverList(){
+        callApi({
+            url:"/simu/wechat/voucherList",
+            type:"POST",
+        }).then(res => {
+            this.props.changeData({
+                list: res.data.list || []
+            })
+        })
     }
     render(){
-        const list = [1, 2, 3, 4, 5, 6, 7];
+        const { state, props } = this;
+        const RecoverList = props.RecoverList;
+        const { list, noticeMsg } = RecoverList;
         return (
             <div className={prefix}>
                 <Helmet>
@@ -33,28 +61,25 @@ export default class RecoverList extends React.Component {
                     <div className="declaration">
                         <div className="title">公告</div>
                         <div className="content">
-                            所有出售票券权益有效期需＞5天，多数票券采用预结
-        算方式回款，回款后不代表不售后！
+                            {noticeMsg.description}
                     </div>
                     </div>
                     <div className="recoverList">
                         <div className="title">回收列表</div>
-
                         <div className="list">
-                            {list.map((_, index) => {
+                            {list.map((item, index) => {
                                 return (
                                     <div className="item" key={index}>
                                         <RecoverItem
+                                            item = {item}
                                             onClick={() => this.props.history.push("/ticketManage/recoverDetail")}
                                         />
                                     </div>
                                 )
                             })}
-
                         </div>
                     </div>
                 </div>
-                
                 <div className="footer">
                     <FooterTab />
                 </div>
