@@ -32,3 +32,25 @@ npm run build  构建生成包
 `homePage`  管理员首页（待生成）
 ...
 
+### 图片引入
+
+```
+<img src={`${"images/图片名称.jpg"}`} />
+或者如果图片小于10K也可以使用背景图
+`background:url(~"images/图片名称.png")`
+```
+
+### 样式说明
+
+`src/component`是通用组件. `prefix`为 `”component-组件名“`
+
+#### ticketManage（二级路由）
+1. `component前缀为"ticketManage-component-FooterTab"`
+2. `router前缀为"ticketManage-component-路由名称"`
+
+
+
+
+
+
+

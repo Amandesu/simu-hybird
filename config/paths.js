@@ -13,6 +13,7 @@ module.exports = {
     appPath: resolveApp('.'),
     appSrc:resolveApp("src"),
     appIndexJs: resolveApp("src/index.js"),
+    appCommonJs: resolveApp("src/common.js"),
     appPublic:resolveApp("public"),
     appHtml:resolveApp("public/index.html"),
     appPackageJson: resolveApp('package.json'),

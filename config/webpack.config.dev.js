@@ -72,8 +72,8 @@ module.exports = {
                 test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
                 loader: require.resolve("url-loader"),
                 options: {
-                    limit: 10000,
-                    name: "static/[name].[hash:8].[ext]"
+                    limit: 1000,
+                    name: "images/[name].[ext]"
                 }
             },
             {

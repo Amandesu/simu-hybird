@@ -14,12 +14,14 @@ const fs = require("fs");
 
 module.exports = {
     mode: "production",
-    entry: [paths.appIndexJs],
+    entry: {
+        "main":paths.appIndexJs,
+    },
     output: {
         // Add /* filename */ comments to generated require()s in the output.
         pathinfo: true,
         path: paths.appBuild,
-        filename: "js/bundle.[hash].js",
+        filename: "js/bundle.[name].[hash].js",
         chunkFilename: "js/[name].chunk.js",
         publicPath: "./",
         devtoolModuleFilenameTemplate: (info) =>
@@ -66,7 +68,7 @@ module.exports = {
                 loader: require.resolve("url-loader"),
                 options: {
                     limit: 10000,
-                    name: "static/[name].[hash:8].[ext]"
+                    name: "images/[name].[ext]"
                 }
             },
             {
@@ -100,6 +102,7 @@ module.exports = {
                         loader: require.resolve("css-loader"),
                         options: {
                             importLoaders: 1,
+                            url: true
                             //root: path.resolve(paths.appSrc, "images")
                         }
                     },
@@ -176,7 +179,7 @@ module.exports = {
         //new webpack.DefinePlugin(env.stringified),
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin({
-            filename: "css/main.css"
+            filename: "main.css"
         }),
         new WebpackParallelUglifyPlugin({
             uglifyJS: {
