@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import { FooterTab } from "ticketManage/component";
 import { Helmet } from "react-helmet";
 import Loadable from "react-loadable";
+import RecoverList from '../recoverList';
 import "./index.less";
 
-const RecoverList = Loadable({loader: () => import('../recoverList'), loading: () => <div></div>});
+
 const OrderList = Loadable({loader: () => import('../orderList'), loading: () => <div></div>});
 const User = Loadable({loader: () => import('../user'), loading: () => <div></div>});
 
@@ -33,11 +34,12 @@ export default class Home extends React.Component {
             <div className={prefix}>
                 <Switch>
                     <Route path="/ticketManage/recoverList" exact 
-                        render={(props) => {
+                       /*  render={(props) => {
                             return <RecoverList {...props}/>
-                        }}
+                        }} */
+                        component={RecoverList}
                     />
-                    <Route path="/ticketManage/orderList" exact 
+                    {/* <Route path="/ticketManage/orderList" exact 
                         render={(props) => {
                             return <OrderList {...props}/>
                         }}
@@ -51,7 +53,7 @@ export default class Home extends React.Component {
                         render={(props) => {
                             return <RecoverList {...props}/>
                         }}
-                    />
+                    /> */}
                 </Switch>
             </div>
         )

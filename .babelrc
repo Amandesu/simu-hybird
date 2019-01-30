@@ -6,6 +6,7 @@
         }]
     ],
     "plugins": [
+        //"@babel/plugin-transform-modules-commonjs",
         ["import", { "libraryName": "antd-mobile", "style": true}],
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-transform-runtime",

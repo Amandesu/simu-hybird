@@ -71,8 +71,26 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
-                include: paths.appSrc,
-                loader: require.resolve("babel-loader")
+                include: [paths.appSrc, /node_modules\/superagent/],
+                loader: require.resolve("babel-loader"),
+                options:
+                    {
+                        "presets": [
+                            "@babel/preset-react",
+                            ["@babel/preset-env", {
+                                "useBuiltIns": "usage" 
+                            }]
+                        ],
+                        "plugins": [
+                            "@babel/plugin-transform-modules-commonjs",
+                            ["import", { "libraryName": "antd-mobile", "style": true}],
+                            "@babel/plugin-syntax-dynamic-import",
+                            "@babel/plugin-transform-runtime",
+                            ["@babel/plugin-proposal-decorators", {"legacy": true}],
+                            ["@babel/plugin-proposal-class-properties"]
+                        ]
+                    } 
+                
             },
             {
                 test: /\.css/,
@@ -160,7 +178,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: "css/main.css"
         }),
-         /* new WebpackParallelUglifyPlugin({
+        new WebpackParallelUglifyPlugin({
             uglifyJS: {
               output: {
                 beautify: false, //不需要格式化
@@ -173,13 +191,11 @@ module.exports = {
                 reduce_vars: true // 提取出出现多次但是没有定义成变量去引用的静态值
               }
             }
-          })  */
-      
-
+          })   
     ],
 
     optimization: {
-        minimize: true
+        minimize: false
     }, 
     node: {
         dgram: "empty",

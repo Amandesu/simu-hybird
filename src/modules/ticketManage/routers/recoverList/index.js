@@ -7,7 +7,6 @@ import { FooterTab } from "ticketManage/component";
 import { RecoverItem } from "ticketManage/component"
 import { callApi } from "Utils"
 import "./index.less";
-
 const prefix = "ticketManage-recoverList";
 
 @connect(
