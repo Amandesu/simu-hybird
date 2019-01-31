@@ -84,7 +84,7 @@ export default class CreditSetting extends React.Component {
         return (
             <div className={prefix}>
                 <Helmet>
-                    <title>思慕权益-订单</title>
+                    <title>收款账户设置</title>
                 </Helmet>
                 <div className="content">
                     <List>

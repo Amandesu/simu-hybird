@@ -2,7 +2,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { DatePicker } from "antd-mobile";
+import { Modal, Toast, DatePicker } from "antd-mobile";
 import { OrderItem } from "ticketManage/component";
 import { NoContent } from "component";
 import { callApi } from "Utils";
@@ -83,6 +83,29 @@ export default class OrderSearch extends React.Component {
             })
         })
     }
+     // 撤回票据
+     withDraw(item){
+        Modal.alert('撤回确定', '撤回后所有信息需要重新填写和提交，是否继续撤回？', [
+            { text: '取消', onPress: () => {} },
+            { text: '确定', onPress: () => {
+                callApi({
+                    url:"/simu/wechat/backVoucher",
+                    type:"POST",
+                    data: {
+                        "openId": "wenpeng",
+                        voucherNo:11||item.voucherNo
+                    }
+                }).then(res => {
+                    Toast.success("成功撤回", 2)
+                    if (this.state.searchType == "code") {
+                        this.onSearchCode()
+                    } else {
+                        this.onSearchDate()
+                    }
+                })
+            }}
+        ])
+    }
     formatDate(date, format="yyyy-MM-dd hh:mm:ss"){
         let y = date.getFullYear(),
             M = date.getMonth()+1,
@@ -154,7 +177,7 @@ export default class OrderSearch extends React.Component {
                  <div className="list">
                     {state.list.map((item,index) => {
                         return (
-                            <OrderItem item={item} className="item" key={index}/>
+                            <OrderItem item={item} className="item" key={index} onButtonClick={() => this.withDraw(item)}/>
                         )
                     })}
                     { !state.list.length && !state.loadding ?

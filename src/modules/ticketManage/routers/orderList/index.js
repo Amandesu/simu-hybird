@@ -2,7 +2,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { SearchBar } from "antd-mobile";
+import { SearchBar, Modal, Toast } from "antd-mobile";
 import { Helmet } from "react-helmet";
 import { FooterTab, OrderItem } from "ticketManage/component";
 import { NoContent } from "component";
@@ -39,13 +39,35 @@ export default class RecoverList extends React.Component {
                 list: res.data.list || [],
                 loadding:false
             })
+        }).catch(res => {
+            this.props.changeData({ loadding:false })
         })
+    }
+    // 撤回票据
+    withDraw(item){
+        Modal.alert('撤回确定', '撤回后所有信息需要重新填写和提交，是否继续撤回？', [
+            { text: '取消', onPress: () => {} },
+            { text: '确定', onPress: () => {
+                callApi({
+                    url:"/simu/wechat/backVoucher",
+                    type:"POST",
+                    data: {
+                        "openId": "wenpeng",
+                        voucherNo:11||item.voucherNo
+                    }
+                }).then(res => {
+                    Toast.success("成功撤回", 2)
+                    this.getOrderList()
+                })
+            }}
+        ])
     }
     render(){
         const { state, props } = this;
         const OrderList = props.OrderList;
         const isActive = (status) => OrderList.status == status ? "active":"";
-        const activeList = OrderList.list.filter(item => item.status == OrderList.status)
+        const activeList = OrderList.list.filter(item => item.status == OrderList.status || ([0, 1, -1, -2].indexOf(item.status) == -1 && OrderList.status == -1))
+        
         return (
             <div className={prefix}>
                 <Helmet>
@@ -67,14 +89,19 @@ export default class RecoverList extends React.Component {
                     </div>
                 </div>
                 <div className={prefix+"-list"}>
-                    {activeList.map((item, index) => {
+                    { !OrderList.list.length && OrderList.loadding == false ?
+                     <div className="no-data">
+                         <span onClick={() => props.history.push("/ticketManage/recoverList")}>
+                            暂无订单，请前往<a>回收</a>处提交
+                        </span>
+                    </div>
+                    : !activeList.length && OrderList.loadding == false ?
+                        <NoContent />
+                    : activeList.map((item, index) => {
                         return (
-                            <OrderItem item={item} className="item" key={index}/>
+                            <OrderItem item={item} className="item" key={index} onButtonClick={() => this.withDraw(item)}/>
                         )
                     })}
-                    { !activeList.length && OrderList.loadding == false ?
-                        <NoContent />
-                    : ""}
     
                     
                 </div>

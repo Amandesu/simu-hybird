@@ -2,6 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Helmet } from "react-helmet";
 import { RecoverItem } from "ticketManage/component"
 import { ImagePicker, Modal } from 'antd-mobile';
 import { callApi, getParamUrl } from "Utils";
@@ -21,6 +22,7 @@ export default class RecoverDetail extends React.Component {
 
     }
     state = {
+        detail:  { source: []},
 
         files:[{
             url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
@@ -28,7 +30,7 @@ export default class RecoverDetail extends React.Component {
           }, {
             url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
             id: '2122',
-          }]
+        }]
     }
     componentDidMount(){
         this.getRecoverDetail()
@@ -43,7 +45,7 @@ export default class RecoverDetail extends React.Component {
                 voucherId:params.voucherId
             }
         }).then(res => {
-            console.log(res)
+            this.setState({detail:res.data||{}})
         })
     }
     onChange = (files, type, index) => {
@@ -58,19 +60,25 @@ export default class RecoverDetail extends React.Component {
     }
     render(){
         let files = this.state.files
+        let detail = this.state.detail;
         return (
             <div className={prefix}>
+                <Helmet>
+                    <title>回收详情</title>
+                </Helmet>
                 <div className={prefix+"-content"}>
                     <div className="detail">
-                        <RecoverItem item={{voucherTitle:"test", price:"12"}}/>
+                        <RecoverItem item={{voucherTitle:detail.title, price:detail.price}}/>
                     </div>
                     <div className="notice">
                         <div className="title">来源及提醒</div>
                         <div className="content">
                             <ul>
-                                <li>1、操作路径：动卡空间APP-首页-天天有券</li>
-                                <li>2、请保证券码有效性，且保证有10天及以上有效期</li>
-                                <li>3、请上传带有串码的图片，若上传的串码已被使用或错误，即便您已拿到货款，后续也会被追责，请卖家认真核实。</li>
+                                { detail.source.map((item, index) => {
+                                    return (<li key={index}>
+                                        {item}
+                                    </li>)
+                                }) }
                             </ul>
                         
                         </div>

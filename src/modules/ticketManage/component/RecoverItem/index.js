@@ -10,7 +10,7 @@ export default function RecoverItem(props) {
     return (
         <div className={prefix} onClick={() => props.onClick && props.onClick()} >
             <div className="cover">
-                <img src={require("images/recoverList.png")} />
+                <img src={item.picUrl || require("images/ticket.png")} />
             </div>
             <div className="decs">
                 <div className="text">

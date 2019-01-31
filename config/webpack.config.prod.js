@@ -21,7 +21,7 @@ module.exports = {
         // Add /* filename */ comments to generated require()s in the output.
         pathinfo: true,
         path: paths.appBuild,
-        filename: "js/bundle.[name].[hash].js",
+        filename: "js/bundle.[hash].js",
         chunkFilename: "js/[name].chunk.js",
         publicPath: "./",
         devtoolModuleFilenameTemplate: (info) =>
@@ -181,7 +181,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: "main.css"
         }),
-        new WebpackParallelUglifyPlugin({
+       new WebpackParallelUglifyPlugin({
             uglifyJS: {
               output: {
                 beautify: false, //不需要格式化
@@ -194,7 +194,7 @@ module.exports = {
                 reduce_vars: true // 提取出出现多次但是没有定义成变量去引用的静态值
               }
             }
-          })   
+          })  
     ],
 
     optimization: {

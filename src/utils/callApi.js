@@ -1,6 +1,8 @@
 import request from "superagent";
 import { Toast } from "antd-mobile";
 
+const projectName = ""
+
 
 var formData = new FormData();
     formData.append('key1', 'value1');
@@ -45,16 +47,14 @@ const callApi = ({url = "", type = "POST", data = {}, dataType="json"}) => {
             if (res.status == 200 && res.body && res.body.code == 0) {
                 resolve && resolve(res.body)
             } else {
-                console.log(reject)
-                if (reject) {
-                    reject(res)
-                } else {
-                    Toast.fail(res.body.msg, 2)
-                }
+                    
+                Toast.fail(res.body.msg, 2)
+                reject && reject(res)
             }
         }, err => {
             // 404 500等异常 业务不处理
-            Toast.fail(err.status, 2)
+            Toast.fail(err.status+"请稍后再试", 2)
+            reject && reject(err)
         })
     })
 }

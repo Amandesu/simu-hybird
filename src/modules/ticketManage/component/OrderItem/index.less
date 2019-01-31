@@ -9,7 +9,7 @@
         height: 23px;
         display: flex;
         justify-content: space-between;
-        
+        align-items: center;
         .title{
             overflow: hidden;
             text-overflow:ellipsis;
@@ -56,6 +56,8 @@
             margin-top: 10px;
             font-size: 14px;
             color: #494949;
+            display: flex;
+            align-items: center;
             img{
                 height: 16px;
                 width: 16px;
@@ -68,5 +70,21 @@
             font-size: 16px;
             color: #494949;
         }
+        
     }
+    >.withdraw{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-top: 10px;
+        .button{
+            padding: 4px 8px;
+            background: #E6A23C;
+            color:#fff;
+            font-size: 13px;
+            text-align: right;
+            border:1px solid #E6A23C;
+        }
+    }
+    
 }

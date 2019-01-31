@@ -6,6 +6,7 @@ if (!process.env.NODE_ENV) {
 const webpack = require("webpack");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const path = require("path");
 const paths = require("./paths");
 
@@ -162,7 +163,11 @@ module.exports = {
             template: paths.appHtml
         }),
         new webpack.NamedModulesPlugin(),
-        //new webpack.DefinePlugin(env.stringified),
+        //new InterpolateHtmlPlugin(),
+        new webpack.DefinePlugin({
+            DEVELOPMENT: JSON.stringify(true),
+            PRODUCTION: JSON.stringify(false)
+        }),
         new webpack.HotModuleReplacementPlugin()
     ],
     // Some libraries import Node modules but don't use them in the browser.
