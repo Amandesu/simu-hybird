@@ -39,7 +39,7 @@ export default class CreditSetting extends React.Component {
                     alipayName:data.alipayName,
                     alipayNo:data.alipayNo,
                     files:[{
-                        url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+                        url: data.alipayUrl || 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
                         id: '2122',
                     }]
                 }

@@ -3,10 +3,11 @@ import { Route, Switch } from "react-router-dom";
 import Loadable from "react-loadable";
 
 import RecoverList from "./routers/recoverList";
+
 /* const RecoverList = Loadable({
     loader: () => import("./routers/recoverList"),
     loading: () => <div />
-})  */ 
+}); */
 const OrderList = Loadable({
     loader: () => import("./routers/orderList"),
     loading: () => <div />
@@ -14,11 +15,11 @@ const OrderList = Loadable({
 const User = Loadable({
     loader: () => import("./routers/user"),
     loading: () => <div />
-});
+}); 
 const RecoverDetail = Loadable({
     loader: () => import("./routers/recoverDetail"),
     loading: () => <div />
-});
+}); 
 const OrderSearch = Loadable({
     loader: () => import("./routers/orderSearch"),
     loading: () => <div />
