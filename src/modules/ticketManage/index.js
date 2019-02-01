@@ -1,42 +1,70 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Loadable from "react-loadable";
-
+//import Loadable from "react-loadable";
 import RecoverList from "./routers/recoverList";
 
-/* const RecoverList = Loadable({
-    loader: () => import("./routers/recoverList"),
-    loading: () => <div />
-}); */
+ 
+function Loadable({loader, loading}){
+
+    class AsyncComponent extends React.Component {
+        state = {
+            mod : function(){
+                return <div>12</div>
+            }
+        }
+        componentWillMount() {
+            this.load();
+        }
+        load() {
+            this.setState({
+                mod: function(){
+                    return <div>12</div>
+                }
+            });
+             loader().then((mod) => {
+                this.setState({
+                    mod: mod.default ? mod.default : mod
+                });
+            });
+        }
+        render() {
+            const M  = this.state.mod;
+            return <React.Fragment>
+                <M {...this.props}/>
+            </React.Fragment>;
+        }
+    }
+    return (props) => <AsyncComponent {...props} />
+}
+//const RecoverList = Loadable({
+  //  loader: () => import(/* webpackChunkName: "RecoverList" */"./routers/RecoverList"),
+    //loading: () => <div />
+//});
+
 const OrderList = Loadable({
-    loader: () => import("./routers/orderList"),
+    loader: () => import(/* webpackChunkName: "OrderList" */"./routers/orderList"),
     loading: () => <div />
 });
 const User = Loadable({
-    loader: () => import("./routers/user"),
+    loader: () => import(/* webpackChunkName: "User" */"./routers/user"),
     loading: () => <div />
 }); 
 const RecoverDetail = Loadable({
-    loader: () => import("./routers/recoverDetail"),
+    loader: () => import(/* webpackChunkName: "RecoverDetail" */"./routers/recoverDetail"),
     loading: () => <div />
 }); 
 const OrderSearch = Loadable({
-    loader: () => import("./routers/orderSearch"),
+    loader: () => import(/* webpackChunkName: "OrderSearch" */"./routers/orderSearch"),
     loading: () => <div />
 });
 const CreditSetting = Loadable({
-    loader: () => import("./routers/creditSetting"),
+    loader: () => import(/* webpackChunkName: "CreditSetting" */"./routers/creditSetting"),
     loading: () => <div />
 });
 const AboutSimu = Loadable({
-    loader: () => import("./routers/aboutSimu"),
+    loader: () => import(/* webpackChunkName: "AboutSimu" */"./routers/aboutSimu"),
     loading: () => <div />
 });
-const TestApi = Loadable({
-    loader: () => import("./routers/testApi"),
-    loading: () => <div />
-});
-
 let routers = (props) => {
     return (
         <div className="ticketManage-home">
@@ -81,18 +109,6 @@ let routers = (props) => {
                     path="/ticketManage/aboutSimu"
                     render={(props) => {
                         return <AboutSimu />;
-                    }}
-                />
-                <Route
-                    path="/ticketManage/testApi"
-                    render={(props) => {
-                        return <TestApi />;
-                    }}
-                />
-                <Route
-                    path="/ticketManage"
-                    render={(props) => {
-                        return <Home />;
                     }}
                 />
             </Switch>

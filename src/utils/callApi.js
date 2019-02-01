@@ -30,17 +30,23 @@ function getData(type, data, dataType){
 }
 const callApi = ({url = "", type = "POST", data = {}, dataType="json"}) => {
     type = type.toUpperCase();
-    data = getData(type, data, dataType);
+    
 
+    let requestComplete = null;
     let requestHttp = request.post(url);    
     if (type == "GET") {
         requestHttp = request.get(url).query(data);
     }
-
-    let requestComplete = requestHttp
+    if (dataType=="json") {
+        data = getData(type, data, dataType);
+        requestComplete = requestHttp
         .set('Content-Type', 'application/json')
         .timeout({deadline:"10000"})
         .send(data);
+    } else {
+        console.log(data["file"])
+        requestComplete = requestHttp.attach('file', new Blob(data["file", {type:"images/png"}]))
+    }
 
     return new Promise((resolve, reject) => {
         requestComplete.then(res => {

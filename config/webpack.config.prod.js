@@ -22,7 +22,7 @@ module.exports = {
         pathinfo: true,
         path: paths.appBuild,
         filename: "js/bundle.[hash].js",
-        chunkFilename: "js/[name].chunk.js",
+        chunkFilename: "js/[name].[hash].chunk.js",
         publicPath: "./",
         devtoolModuleFilenameTemplate: (info) =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, "/")
@@ -181,7 +181,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: "main.css"
         }),
-       new WebpackParallelUglifyPlugin({
+      new WebpackParallelUglifyPlugin({
             uglifyJS: {
               output: {
                 beautify: false, //不需要格式化

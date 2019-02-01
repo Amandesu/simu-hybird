@@ -7,10 +7,8 @@ import { Helmet } from "react-helmet";
 import { FooterTab } from "ticketManage/component";
 import { RecoverItem } from "ticketManage/component"
 import { callApi } from "Utils"
-import ClipboardJS from 'clipboard';
 import "./index.less";
 const prefix = "ticketManage-recoverList";
-new ClipboardJS(".btn")
 @connect(
     (state) => ({
         RecoverList: state.TicketManage_RecoverList
@@ -30,14 +28,6 @@ export default class RecoverList extends React.Component {
     <img src="assets/clippy.svg" alt="Copy to clipboard">
 </button> */
     componentDidMount(){
-        modal.alert("复制文本", <input id="foo" value={window.navigator.userAgent}></input>, [{
-            onPress:() => {
-                ;
-            },
-            text:<button className="btn"  data-clipboard-target="#foo">
-           复制
-        </button>
-        }])
         this.getNoticeMsg();
         this.getRecoverList();
     }

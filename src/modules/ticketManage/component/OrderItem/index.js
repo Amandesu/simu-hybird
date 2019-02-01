@@ -17,7 +17,7 @@ export default function OrderItem(props) {
     const item = props.item;
     const statusConf = getStatusConf(item.status); 
     return (
-        <div className={`${prefix} ${props.className}`} onClick={e => console.log(1)}>
+        <div className={`${prefix} ${props.className}`} onClick={e => {}}>
             <div className="header">
                 <div className="title">{item.title}</div>
                 <div className={`status ${statusConf.cls}`}>{statusConf.name}</div>
