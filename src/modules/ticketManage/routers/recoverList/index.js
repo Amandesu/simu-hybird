@@ -19,7 +19,6 @@ const prefix = "ticketManage-recoverList";
 )
 export default class RecoverList extends React.Component {
     componentDidMount(){
-        console.log(1)
         this.getNoticeMsg();
         this.getRecoverList();
     }

@@ -34,12 +34,6 @@ export const WxAuth = (auth) => {
             return
         }
         // 判断是否授权过
-        checkAuth().then(res => {
-            if (res.status == 1) {
-                
-            }
-        })
-
         let code = queryUrl("code");
         if (code) {
             // 如果拿到了code, 调用auth接口 获取openid
@@ -52,7 +46,7 @@ export const WxAuth = (auth) => {
             }).then(res => {
                 if (res.data.accessToken && res.data.openId) {
                     // oXf9j53b7u-7_Fyh1jnb5JrTGLoE
-                    resolve && resolve();
+                    resolve && resolve(res.data);
                 } else {
                     window.location.href = getWXopenUrl();
                 }

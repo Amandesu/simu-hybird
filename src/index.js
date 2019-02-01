@@ -18,14 +18,12 @@ class App extends React.Component {
     }
 }
 // 经过微信授权
-WxAuth(false).then(res => {
+WxAuth(true).then(data => {
     TmCache.put("auth", {
-        openid:"wenpeng" || "oXf9j53b7u-7_Fyh1jnb5JrTGLoE"
+        openid:data.openId || "wenpeng"
     })
     ReactDOM.render(
         <App />
     , document.getElementById("root"))  
-    //window.location.search = "";
-    //window.location.replace("http://192.168.194.34:8080/#/ticketManage/recoverList")
 })
 
