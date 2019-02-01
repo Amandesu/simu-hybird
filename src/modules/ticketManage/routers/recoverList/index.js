@@ -18,16 +18,8 @@ const prefix = "ticketManage-recoverList";
     }, dispatch)
 )
 export default class RecoverList extends React.Component {
-    UNSAFE_componentWillReceiveProps(nextProps){
-
-    }
-    /* <input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
-
-<!-- Trigger -->
-<button class="btn" data-clipboard-target="#foo">
-    <img src="assets/clippy.svg" alt="Copy to clipboard">
-</button> */
     componentDidMount(){
+        console.log(1)
         this.getNoticeMsg();
         this.getRecoverList();
     }
@@ -77,7 +69,7 @@ export default class RecoverList extends React.Component {
                                     <div className="item" key={index}>
                                         <RecoverItem
                                             item = {item}
-                                            onClick={() => this.props.history.push(`/ticketManage/recoverDetail?voucherId=${item.id}`)}
+                                            onClick={() => this.props.history.push(`/ticketManage/recoverDetail/${item.id}`)}
                                         />
                                     </div>
                                 )

@@ -14,7 +14,7 @@ module.exports = function(proxy, allowedHost) {
     
     return {
         disableHostCheck:
-            !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === "true",
+            true || !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === "true",
         // Enable gzip compression of generated files.
         compress: true,
         clientLogLevel: "none",

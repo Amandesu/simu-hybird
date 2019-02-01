@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { List, InputItem, ImagePicker, Modal, Toast } from "antd-mobile";
-import { callApi } from "Utils";
+import { callApi, TmCache } from "Utils";
 import "./index.less";
 
 const Item = List.Item;
@@ -25,12 +25,11 @@ export default class CreditSetting extends React.Component {
         this.queryPayInfo();
     }
     queryPayInfo() {
-        console.log("222")
         callApi({
             url:"/simu/wechat/queryPayInfo",
             type:"POST",
             data:{
-                openId:"wenpeng"
+                openId:TmCache.get("auth").openid
             }
         }).then(res => {
             const data = res.data || {};
@@ -38,10 +37,10 @@ export default class CreditSetting extends React.Component {
                 payinfo:{
                     alipayName:data.alipayName,
                     alipayNo:data.alipayNo,
-                    files:[{
+                    files:data.alipayUrl  ?[{
                         url: data.alipayUrl || 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
                         id: '2122',
-                    }]
+                    }]:[]
                 }
             })
         })
@@ -50,7 +49,7 @@ export default class CreditSetting extends React.Component {
         const { state, props } = this;
         const payinfo = props.CreditSetting.payinfo;
         callApi({
-            url:`/simu/wechat/saveOrUpdatePayInfo?openId=${"wenpeng"}&alipayNo=${payinfo.alipayNo}&alipayName=${payinfo.alipayName}`,
+            url:`/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${payinfo.alipayName}`,
             type:"POST",
             dataType: "formData",
             data:{
@@ -129,6 +128,7 @@ export default class CreditSetting extends React.Component {
                     </List>
                 </div>
                 <div className={`footer ${disabledSumbit? "disabled":""}`} onClick={() => {
+                    console.log(11)
                     if (!disabledSumbit) {
                         Modal.alert('提示', '请确保您的收款信息是正确的（如果由于个人的收款信息填写错误造成的损失，本人自行负责）', [
                             { text: '取消', onPress: () => {} },

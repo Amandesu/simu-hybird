@@ -36,8 +36,7 @@ export default class RecoverDetail extends React.Component {
         this.getRecoverDetail()
     }
     getRecoverDetail(){
-        let params = getParamUrl(this.props.location.search);
-        console.log(params.voucherId)
+        let params = this.props.match.params ||{};
         callApi({
             url:"/simu/wechat/voucherDetail",
             type:"GET",

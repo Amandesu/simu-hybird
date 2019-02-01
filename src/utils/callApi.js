@@ -1,4 +1,6 @@
 import request from "superagent";
+//import axios from "axios";
+//import $ from "jquery";
 import { Toast } from "antd-mobile";
 
 const projectName = ""
@@ -44,14 +46,14 @@ const callApi = ({url = "", type = "POST", data = {}, dataType="json"}) => {
         .timeout({deadline:"10000"})
         .send(data);
     } else {
-        console.log(data["file"])
-        requestComplete = requestHttp.attach('file', new Blob(data["file", {type:"images/png"}]))
+        requestComplete = requestHttp.field("file", data["file"])
     }
 
     return new Promise((resolve, reject) => {
         requestComplete.then(res => {
-            if (res.status == 200 && res.body && res.body.code == 0) {
-                resolve && resolve(res.body)
+            let body = (res.body|| res.data) || {};
+            if (res.status == 200 && body.code == 0) {
+                resolve && resolve(body)
             } else {
                     
                 Toast.fail(res.body.msg, 2)

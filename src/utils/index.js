@@ -1,8 +1,20 @@
 
 export { default as callApi } from "./callApi";
-export { default as WxAuth } from "./WxAuth";
+
+export { 
+    getParamUrl,
+    queryUrl,
+    markUrl,
+    locationSearch
+} from "./url";
+
+export { 
+    WxAuth,
+    isWeixin
+} from "./wx";
 
 
 export { 
-    getParamUrl
-} from "./url";
+    TmCache,
+    hpCache
+} from "./cache";

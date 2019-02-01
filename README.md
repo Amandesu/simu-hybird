@@ -7,6 +7,7 @@
 npm install    安装依赖包
 npm run start  开发环境
 npm run build  构建生成包
+代理 "http://47.106.206.152",
 ```
 ### 技术
 
@@ -47,6 +48,8 @@ npm run build  构建生成包
 #### ticketManage（二级路由）
 1. `component前缀为"ticketManage-component-FooterTab"`
 2. `router前缀为"ticketManage-component-路由名称"`
+
+
 
 
 

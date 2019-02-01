@@ -6,7 +6,7 @@ import { SearchBar, Modal, Toast } from "antd-mobile";
 import { Helmet } from "react-helmet";
 import { FooterTab, OrderItem } from "ticketManage/component";
 import { NoContent } from "component";
-import { callApi } from "Utils"
+import { callApi, TmCache } from "Utils"
 import "./index.less";
 
 const prefix = "ticketManage-orderList";
@@ -30,7 +30,7 @@ export default class RecoverList extends React.Component {
             url:"/simu/wechat/orderList",
             type:"POST",
             data: {
-                "openId": "wenpeng",
+                "openId": TmCache.get("auth").openid,
                 //"pageNum": 1,
                 //"pageSize": 10,
             }

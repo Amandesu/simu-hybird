@@ -9,7 +9,7 @@ function Loadable({loader, loading}){
     class AsyncComponent extends React.Component {
         state = {
             mod : function(){
-                return <div>12</div>
+                return <div>不支持按需加载</div>
             }
         }
         componentWillMount() {
@@ -18,7 +18,7 @@ function Loadable({loader, loading}){
         load() {
             this.setState({
                 mod: function(){
-                    return <div>12</div>
+                    return <div></div>
                 }
             });
              loader().then((mod) => {
@@ -94,7 +94,7 @@ let routers = (props) => {
                     }}
                 />
                 <Route
-                    path="/ticketManage/recoverDetail"
+                    path="/ticketManage/recoverDetail/:voucherId"
                     render={(props) => {
                         return <RecoverDetail {...props} />;
                     }}
