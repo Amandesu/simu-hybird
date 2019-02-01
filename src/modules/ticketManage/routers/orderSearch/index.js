@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Modal, Toast, DatePicker } from "antd-mobile";
 import { OrderItem } from "ticketManage/component";
 import { NoContent } from "component";
-import { callApi } from "Utils";
+import { callApi, TmCache } from "Utils";
 import "./index.less";
 
 const prefix = "ticketManage-orderSearch";
@@ -26,9 +26,6 @@ export default class OrderSearch extends React.Component {
         list:[],
         codeList:[],
         dateList:[],
-    }
-    UNSAFE_componentWillReceiveProps(nextProps){
-
     }
     componentDidMount(){
     }
@@ -51,7 +48,7 @@ export default class OrderSearch extends React.Component {
             url:"/simu/wechat/orderList",
             type:"POST",
             data: {
-                "openId": "wenpeng",
+                "openId": TmCache.get("auth").openid,
                 ...params,
                 
             }
@@ -92,7 +89,7 @@ export default class OrderSearch extends React.Component {
                     url:"/simu/wechat/backVoucher",
                     type:"POST",
                     data: {
-                        "openId": "wenpeng",
+                        "openId": TmCache.get("auth").openid,
                         voucherNo:11||item.voucherNo
                     }
                 }).then(res => {

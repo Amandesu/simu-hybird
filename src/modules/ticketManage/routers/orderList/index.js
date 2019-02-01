@@ -52,8 +52,8 @@ export default class RecoverList extends React.Component {
                     url:"/simu/wechat/backVoucher",
                     type:"POST",
                     data: {
-                        "openId": "wenpeng",
-                        voucherNo:11||item.voucherNo
+                        "openId": TmCache.get("auth").openid,
+                        voucherNo:item.voucherNo
                     }
                 }).then(res => {
                     Toast.success("成功撤回", 2)
