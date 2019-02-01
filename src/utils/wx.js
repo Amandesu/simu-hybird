@@ -30,7 +30,7 @@ export const WxAuth = (auth) => {
     return new Promise((resolve) => {
         // 判断是否在微信环境下面
         if (!isWeixin() || !auth) {
-            resolve && resolve()
+            resolve && resolve({})
             return
         }
         // 判断是否授权过
@@ -48,11 +48,11 @@ export const WxAuth = (auth) => {
                     // oXf9j53b7u-7_Fyh1jnb5JrTGLoE
                     resolve && resolve(res.data);
                 } else {
-                    window.location.href = getWXopenUrl();
+                    window.location.replace(getWXopenUrl());
                 }
             })
         } else {
-            window.location.href = getWXopenUrl();
+            window.location.replace(getWXopenUrl());
         }
     })
 }
