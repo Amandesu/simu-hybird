@@ -932,6 +932,9 @@ Blue
   -ms-flex: 1 1;
   flex: 1 1;
   -webkit-overflow-scrolling: touch;
+  /* .am-list-extra, .am-input-label, .am-list-content, input, .fake-input-placeholder{
+            font-size: 14px;
+        } */
 }
 
 .ticketManage-creditSetting > .content::-webkit-scrollbar {
@@ -940,14 +943,6 @@ Blue
 
 .ticketManage-creditSetting > .content .qrcode .am-input-label {
   color: #000 !important;
-}
-
-.ticketManage-creditSetting > .content .am-list-extra,
-.ticketManage-creditSetting > .content .am-input-label,
-.ticketManage-creditSetting > .content .am-list-content,
-.ticketManage-creditSetting > .content input,
-.ticketManage-creditSetting > .content .fake-input-placeholder {
-  font-size: 0.14rem;
 }
 
 .ticketManage-creditSetting > .content .am-list-item .am-input-control input {
