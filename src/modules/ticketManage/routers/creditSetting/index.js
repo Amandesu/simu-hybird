@@ -122,7 +122,7 @@ export default class CreditSetting extends React.Component {
                                 }
                                 onAddImageClick={() => console.log(11)}
                                 selectable={payinfo.files.length < 1}
-                                accept="image/gif,image/jpeg,image/jpg,image/png"
+                                accept="image/*" 
                             />
                         </div>
                     </List>
