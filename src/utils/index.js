@@ -18,3 +18,5 @@ export {
     TmCache,
     hpCache
 } from "./cache";
+
+export { default as Loadable} from "./loadable";

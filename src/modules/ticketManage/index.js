@@ -1,70 +1,20 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-//import Loadable from "react-loadable";
+import { Loadable } from "Utils";
 import RecoverList from "./routers/recoverList";
+import OrderList from "./routers/orderList";
+import User from "./routers/user";
+import RecoverDetail from "./routers/recoverDetail";
+import OrderSearch from "./routers/orderSearch";
+import CreditSetting from "./routers/creditSetting";
+import AboutSimu from "./routers/aboutSimu";
 
- 
-function Loadable({loader, loading}){
 
-    class AsyncComponent extends React.Component {
-        state = {
-            mod : function(){
-                return <div>不支持按需加载</div>
-            }
-        }
-        componentWillMount() {
-            this.load();
-        }
-        load() {
-            this.setState({
-                mod: function(){
-                    return <div></div>
-                }
-            });
-             loader().then((mod) => {
-                this.setState({
-                    mod: mod.default ? mod.default : mod
-                });
-            });
-        }
-        render() {
-            const M  = this.state.mod;
-            return <React.Fragment>
-                <M {...this.props}/>
-            </React.Fragment>;
-        }
-    }
-    return (props) => <AsyncComponent {...props} />
-}
 //const RecoverList = Loadable({
   //  loader: () => import(/* webpackChunkName: "RecoverList" */"./routers/RecoverList"),
     //loading: () => <div />
 //});
 
-const OrderList = Loadable({
-    loader: () => import(/* webpackChunkName: "OrderList" */"./routers/orderList"),
-    loading: () => <div />
-});
-const User = Loadable({
-    loader: () => import(/* webpackChunkName: "User" */"./routers/user"),
-    loading: () => <div />
-}); 
-const RecoverDetail = Loadable({
-    loader: () => import(/* webpackChunkName: "RecoverDetail" */"./routers/recoverDetail"),
-    loading: () => <div />
-}); 
-const OrderSearch = Loadable({
-    loader: () => import(/* webpackChunkName: "OrderSearch" */"./routers/orderSearch"),
-    loading: () => <div />
-});
-const CreditSetting = Loadable({
-    loader: () => import(/* webpackChunkName: "CreditSetting" */"./routers/creditSetting"),
-    loading: () => <div />
-});
-const AboutSimu = Loadable({
-    loader: () => import(/* webpackChunkName: "AboutSimu" */"./routers/aboutSimu"),
-    loading: () => <div />
-});
 let routers = (props) => {
     return (
         <div className="ticketManage-home">

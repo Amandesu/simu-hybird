@@ -19,6 +19,7 @@ class App extends React.Component {
 }
 // 经过微信授权
 WxAuth(true).then(data => {
+    // 存储用户授权信息
     TmCache.put("auth", {
         openid:data.openId || "wenpeng"
     })
