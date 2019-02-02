@@ -6,7 +6,6 @@ import rootRouter from "./main/routers";
 import rootReduces from "./main/reduces";
 import { WxAuth, TmCache , locationSearch} from "Utils";
 import "./index.less";
-
 const store = createStore(rootReduces, {})
 class App extends React.Component {
     render(){

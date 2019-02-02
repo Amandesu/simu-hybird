@@ -179,7 +179,7 @@ module.exports = {
         //new webpack.DefinePlugin(env.stringified),
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin({
-            filename: "main.css"
+            filename: "main.[hash:8].css"
         }),
       new WebpackParallelUglifyPlugin({
             uglifyJS: {
