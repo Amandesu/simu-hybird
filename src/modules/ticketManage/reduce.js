@@ -66,6 +66,19 @@ export const TicketManage_OrderSearch = handleActions(
     }
 )
 // 收款账号设置
+export const TicketManage_User = handleActions(
+    {
+        ["TICKETMANAGE_USER_CHANGE"]: (state, action )=> {
+            return { ...state,...action.payload };
+        }
+    },
+    {
+        userInfo: {
+        
+       }
+    }
+)
+// 收款账号设置
 export const TicketManage_CreditSetting = handleActions(
     {
         ["TICKETMANAGE_CREDITSETTING _CHANGE"]: (state, action )=> {

@@ -5,25 +5,43 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { FooterTab } from "ticketManage/component";
 import { List } from "antd-mobile";
-import * as actions from "../../actions/ticketListAction";
+import { callApi, TmCache } from "Utils"
 import "./index.less";
 
 const Item = List.Item;
 const prefix = "ticketManage-user";
 @connect(
     (state) => ({
-        RecoverList: state.TicketManage_User
+        User: state.TicketManage_User
     }), 
-    (dispatch) => bindActionCreators(actions)
+    (dispatch) => bindActionCreators({
+        changeData:(payload) => ({type:"TICKETMANAGE_USER_CHANGE",payload}),
+    }, dispatch)
 )
 export default class RecoverList extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps){
 
     }
     componentDidMount(){
+        this.getUserInfo()
+    }
+    getUserInfo(){
+        callApi({
+            url:"/simu/wechat/getWxUserInfo",
+            type: "GET",
+            data: {
+                accessToken:TmCache.get("auth").accessToken,
+                openId:TmCache.get("auth").openid
+            }
+        }).then(res => {
+            this.props.changeData({
+                userInfo:res.data || {}
+            })
+        })
     }
     render(){
         const { state, props } = this;
+        const userInfo = props.User.userInfo;
         return (
             <div className={prefix}>
                 <Helmet>
@@ -31,10 +49,10 @@ export default class RecoverList extends React.Component {
                 </Helmet>
                 <div className="content">
                     <div className="poster">
-                        <div className="img">
-                            <img src={require("images/user_white.png")}/>
+                        <div className={`img ${!userInfo.headimgurl?"default":""}`}>
+                            <img src={userInfo.headimgurl || ""} onError={(e)=>{e.target.onerror = null; e.target.src=require("images/user_white.png")}}/>
                         </div>
-                        <div className="text">fiveonelei</div>
+                        <div className="text">{userInfo.nickName}</div>
                     </div>
                     <List>
                         <Item

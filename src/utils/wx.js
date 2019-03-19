@@ -41,7 +41,7 @@ export const WxAuth = (auth) => {
                 url:"/simu/wechat/auth",
                 type: "GET",
                 data: {
-                    code
+                    code:code
                 }
             }).then(res => {
                 if (res.data.accessToken && res.data.openId) {
