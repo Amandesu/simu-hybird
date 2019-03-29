@@ -50,7 +50,7 @@ export default class CreditSetting extends React.Component {
         const { state, props } = this;
         const payinfo = props.CreditSetting.payinfo;
         callApi({
-            url: `/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${payinfo.alipayName}`,
+            url: `/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${encodeURIComponent(payinfo.alipayName)}`,
             type:"POST",
             ContentType:"multipart/form-data",
             data:{

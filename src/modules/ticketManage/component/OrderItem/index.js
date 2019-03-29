@@ -27,7 +27,7 @@ export default function OrderItem(props) {
             </div>
             <div className="footer">
                 <div className="ticketCode">
-                    <img src={require("images/qrcode.png")}/> 36254125412
+                    <img src={require("images/qrcode.png")}/> {item.voucherNo}
                 </div>
                 <div className="price">
                     ￥{item.price}

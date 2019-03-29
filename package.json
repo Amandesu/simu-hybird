@@ -68,7 +68,7 @@
     },
     "author": "leiwuyi",
     "license": "ISC",
-    "proxy": "http://47.107.52.22:8080",
+    "proxy": "http://47.106.206.152",
     "browserslist": [
         ">0.2%",
         "not dead",
