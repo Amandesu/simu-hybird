@@ -26,7 +26,7 @@ export default class RecoverList extends React.Component {
     getNoticeMsg(){
         callApi({
             url:"/simu/wechat/queryNotice",
-            type:"GET",
+            type:"GET"
         }).then(res => {
             this.props.changeData({
                 noticeMsg: res.data || {}
@@ -39,8 +39,9 @@ export default class RecoverList extends React.Component {
             url:"/simu/wechat/voucherList",
             type:"POST",
         }).then(res => {
+            let list = res.data.list;
             this.props.changeData({
-                list: res.data.list || []
+                list: list|| []
             })
         })
     }

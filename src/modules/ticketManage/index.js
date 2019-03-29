@@ -8,6 +8,7 @@ import RecoverDetail from "./routers/recoverDetail";
 import OrderSearch from "./routers/orderSearch";
 import CreditSetting from "./routers/creditSetting";
 import AboutSimu from "./routers/aboutSimu";
+import TestApi from "./routers/testApi";
 
 
 //const RecoverList = Loadable({
@@ -59,6 +60,12 @@ let routers = (props) => {
                     path="/ticketManage/aboutSimu"
                     render={(props) => {
                         return <AboutSimu />;
+                    }}
+                />
+                <Route
+                    path="/ticketManage/testApi"
+                    render={(props) => {
+                        return <TestApi />;
                     }}
                 />
             </Switch>

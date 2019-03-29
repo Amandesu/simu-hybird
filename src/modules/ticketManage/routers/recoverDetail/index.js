@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Helmet } from "react-helmet";
 import { RecoverItem } from "ticketManage/component"
-import { ImagePicker, Modal } from 'antd-mobile';
-import { callApi, getParamUrl } from "Utils";
+import { ImagePicker, Modal, Toast } from 'antd-mobile';
+import { callApi, getParamUrl, TmCache } from "Utils";
 import "./index.less";
 
 const prefix = "ticketManage-recoverDetail";
@@ -23,14 +23,8 @@ export default class RecoverDetail extends React.Component {
     }
     state = {
         detail:  { source: []},
-
-        files:[{
-            url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
-            id: '2121',
-          }, {
-            url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
-            id: '2122',
-        }]
+        voucherNo:"",
+        voucherFile:[]
     }
     componentDidMount(){
         this.getRecoverDetail()
@@ -47,18 +41,30 @@ export default class RecoverDetail extends React.Component {
             this.setState({detail:res.data||{}})
         })
     }
-    onChange = (files, type, index) => {
-        console.log(files, type, index);
-        this.setState({
-            files,
-        });
+    submitVoucher = () => {
+        let params = this.props.match.params ||{};
+        let { voucherNo, voucherFile } = this.state;
+        if (!voucherNo && !voucherFile.length) {
+            return Toast.info("请输入券码或上传图片")
+        }
+        voucherFile = voucherFile.length ? voucherFile[0].url : "";
+        callApi({
+            url:`/simu/wechat/submitVoucher?voucherId=${params.voucherId}&openId=${TmCache.get("auth").openid}&voucherNo=${voucherNo}`,
+            type:"POST",
+            ContentType:"multipart/form-data",
+            data: {
+                voucherFile
+            }
+        }).then(res => {
+            Toast.success("提交成功", 1)
+        })
     }
-    
     onImageClick(){
 
     }
     render(){
-        let files = this.state.files
+        let voucherFile = this.state.voucherFile
+        let voucherNo = this.state.voucherNo
         let detail = this.state.detail;
         return (
             <div className={prefix}>
@@ -87,24 +93,23 @@ export default class RecoverDetail extends React.Component {
                         <div className="title">信息填写</div>
                         <div className="ticketInput">
                             <div className="text">券码</div>
-                            <input placeholder="请输入兑换劵码"/>
+                            <input placeholder="请输入兑换劵码" value={voucherNo} onChange={e => this.setState({voucherNo:e.target.value})}/>
                         </div>
                         <div className="ticketUpload">
                             <div className="text">上传图片</div>
                             <div className="imagesList">
                                 <ImagePicker
-                                     files={files}
-                                     onChange={this.onChange}
+                                     files={voucherFile}
+                                     onChange={voucherFile => this.setState({voucherFile})}
                                      onImageClick={(index, fs) => console.log(index, fs)}
-                                     selectable={files.length < 9}
-                                     accept="image/gif,image/jpeg,image/jpg,image/png"
+                                     selectable={voucherFile.length < 1}
+                                     accept="image/*" 
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div className={prefix+"-footer"}>
+                <div className={prefix+"-footer"} onClick={this.submitVoucher}>
                     提交
                 </div>
             </div>

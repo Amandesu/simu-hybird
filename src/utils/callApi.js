@@ -1,70 +1,64 @@
 import request from "superagent";
-//import axios from "axios";
-//import $ from "jquery";
 import { Toast } from "antd-mobile";
 
-const projectName = ""
 
 
-var formData = new FormData();
-    formData.append('key1', 'value1');
-    formData.append('key2', 'value2');
 
-function jsonFormData(json){
-    let formData = new FormData();
+function formData(json) {
+    let param = new window.FormData();
     for (let key in json) {
-        formData.append(key, json[key])
+        param.append(key, json[key])
     }
-    return formData;
+    return param
+}
 
-}
-function getData(type, data, dataType){
-    if (dataType == "formData") {
-        data = jsonFormData(data); 
-    } 
-    else if (type == "GET" && JSON.stringify(data) == `"{}"`) {
-        data = "";
-    } 
-    else if (type == "POST") {
-        data = JSON.stringify(data)
-    }
-    return data;
-}
-const callApi = ({url = "", type = "POST", data = {}, dataType="json"}) => {
+const callApi = ({url = "", type = "POST", data = {}, ContentType = "application/json",config = {}}) => {
     type = type.toUpperCase();
-    
-
-    let requestComplete = null;
-    let requestHttp = request.post(url);    
-    if (type == "GET") {
-        requestHttp = request.get(url).query(data);
-    }
-    if (dataType=="json") {
-        data = getData(type, data, dataType);
-        requestComplete = requestHttp
-        .set('Content-Type', 'application/json')
-        .timeout({deadline:"10000"})
-        .send(data);
-    } else {
-        requestComplete = requestHttp.field("file", data["file"])
+    let fetchApi = () => Promise.resolve();
+    if (type == "GET")  {
+        fetchApi = () => request.get(url)
+            .query(data)
+            .set('Content-Type', ContentType);
+    } else if (type == "POST") {
+        if (ContentType == "multipart/form-data") {
+            data = formData(data)
+        }
+        fetchApi = () => request.post(url).send(data)
     }
 
-    return new Promise((resolve, reject) => {
-        requestComplete.then(res => {
+
+    let getAbort = (reject) => () => reject();
+    let p1 = new Promise((resolve, reject) => {
+        // 提前中断请求
+        getAbort = getAbort(reject)
+        let timeout = (time) => new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject({status:408});
+            }, time)
+        })
+        Promise.race([timeout(config.timeout || 10000), fetchApi()]).then(res => {
+            // 请求有返回
             let body = (res.body|| res.data) || {};
             if (res.status == 200 && body.code == 0) {
                 resolve && resolve(body)
             } else {
-                    
                 Toast.fail(res.body.msg, 2)
                 reject && reject(res)
             }
         }, err => {
-            // 404 500等异常 业务不处理
-            Toast.fail(err.status+"请稍后再试", 2)
+            // 请求超时huo出错
+            if (err.status == 408) {
+                Toast.info("请求超时")
+            } else {
+                Toast.fail(err.status+"请稍后再试", 2)
+            }   
             reject && reject(err)
         })
+                
     })
+    p1.abort = getAbort;
+    return p1;
+   
 }
 
 

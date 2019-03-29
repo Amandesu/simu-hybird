@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { List, InputItem, ImagePicker, Modal, Toast } from "antd-mobile";
 import { callApi, TmCache } from "Utils";
+import Axios from "axios"
+
 import "./index.less";
 
 const Item = List.Item;
@@ -21,7 +23,7 @@ export default class CreditSetting extends React.Component {
         
     };
     componentDidMount() {
-
+        
         this.queryPayInfo();
     }
     queryPayInfo() {
@@ -38,7 +40,7 @@ export default class CreditSetting extends React.Component {
                     alipayName:data.alipayName,
                     alipayNo:data.alipayNo,
                     files:data.alipayUrl  ?[{
-                        url: data.alipayUrl || 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+                        url: data.alipayUrl || '',
                         id: '2122',
                     }]:[]
                 }
@@ -49,18 +51,15 @@ export default class CreditSetting extends React.Component {
         const { state, props } = this;
         const payinfo = props.CreditSetting.payinfo;
         callApi({
-            url:`/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${payinfo.alipayName}`,
+            url: `/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${payinfo.alipayName}`,
             type:"POST",
-            dataType: "formData",
+            ContentType:"multipart/form-data",
             data:{
-                file: payinfo.files[0].url
+                payFile:payinfo.files[0].url
             }
         }).then(res => {
-            if (res.data.ret == true) {
-                Toast.success("保存成功", 2);
-                this.queryPayInfo()
-            }
-        })
+            Toast.success("保存成功", 1)
+        });
     }
     changePayInfo(params){
         const payinfo = this.props.CreditSetting.payinfo;
@@ -79,9 +78,10 @@ export default class CreditSetting extends React.Component {
     render() {
         const { state, props } = this;
         const payinfo = props.CreditSetting.payinfo;
-        const disabledSumbit = !payinfo.alipayName || !payinfo.alipayNo || !payinfo.files.length;
+        const disabledSumbit = false //!payinfo.alipayName || !payinfo.alipayNo || !payinfo.files.length;
         return (
             <div className={prefix}>
+
                 <Helmet>
                     <title>收款账户设置</title>
                 </Helmet>
@@ -128,7 +128,6 @@ export default class CreditSetting extends React.Component {
                     </List>
                 </div>
                 <div className={`footer ${disabledSumbit? "disabled":""}`} onClick={() => {
-                    console.log(11)
                     if (!disabledSumbit) {
                         Modal.alert('提示', '请确保您的收款信息是正确的（如果由于个人的收款信息填写错误造成的损失，本人自行负责）', [
                             { text: '取消', onPress: () => {} },
@@ -146,7 +145,7 @@ export default class CreditSetting extends React.Component {
                         }
                         Toast.info(info, 1)
                     }
-                }}>确认提交</div>
+                }}>确认提交</div>  
             </div>
         );
     }
