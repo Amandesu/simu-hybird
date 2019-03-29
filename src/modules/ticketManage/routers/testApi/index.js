@@ -3,11 +3,8 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { callApi } from "Utils"
 import "./index.less";
-import { promises } from "fs";
 const prefix = "ticketManage-testApi";
 
-//import "./a.js"
-import { pbkdf2 } from "crypto";
 
 
 

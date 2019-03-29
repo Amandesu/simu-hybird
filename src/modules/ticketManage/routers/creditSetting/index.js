@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { List, InputItem, ImagePicker, Modal, Toast } from "antd-mobile";
 import { callApi, TmCache } from "Utils";
-import Axios from "axios"
 
 import "./index.less";
 
