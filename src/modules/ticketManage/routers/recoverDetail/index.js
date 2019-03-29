@@ -48,6 +48,8 @@ export default class RecoverDetail extends React.Component {
             return Toast.info("请输入券码或上传图片")
         }
         voucherFile = voucherFile.length ? voucherFile[0].url : "";
+
+        Toast.loading("正在提交..", 15);
         callApi({
             url:`/simu/wechat/submitVoucher?voucherId=${params.voucherId}&openId=${TmCache.get("auth").openid}&voucherNo=${voucherNo}`,
             type:"POST",

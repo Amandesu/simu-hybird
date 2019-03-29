@@ -49,6 +49,8 @@ export default class CreditSetting extends React.Component {
     saveOrUpdatePayInfo(){
         const { state, props } = this;
         const payinfo = props.CreditSetting.payinfo;
+
+        Toast.loading("正在提交..", 15);
         callApi({
             url: `/simu/wechat/saveOrUpdatePayInfo?openId=${TmCache.get("auth").openid}&alipayNo=${payinfo.alipayNo}&alipayName=${encodeURIComponent(payinfo.alipayName)}`,
             type:"POST",

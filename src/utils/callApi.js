@@ -36,7 +36,7 @@ const callApi = ({url = "", type = "POST", data = {}, ContentType = "application
                 reject({status:408});
             }, time)
         })
-        Promise.race([timeout(config.timeout || 10000), fetchApi()]).then(res => {
+        Promise.race([timeout(config.timeout || 20000), fetchApi()]).then(res => {
             // 请求有返回
             let body = (res.body|| res.data) || {};
             if (res.status == 200 && body.code == 0) {

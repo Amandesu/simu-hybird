@@ -21,6 +21,10 @@ export default class RecoverList extends React.Component {
     componentDidMount(){
         this.getNoticeMsg();
         this.getRecoverList();
+
+        this.content.onscroll = () => {
+            console.log(11)
+        }
     }
     // 获取公共信息
     getNoticeMsg(){
@@ -54,7 +58,7 @@ export default class RecoverList extends React.Component {
                 <Helmet>
                     <title>思慕权益</title>
                 </Helmet>
-                <div className="content">
+                <div className="content" ref = {ref => this.content = ref}>
                     <div className="declaration">
                         <div className="title">公告</div>
                         <div className="content">
