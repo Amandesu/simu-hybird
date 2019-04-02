@@ -13,8 +13,7 @@ export default class TestApi extends React.Component {
         age:1
     }
     componentDidMount(){
-       
-
+      
     }
     renderApp(){
         function Child1(){

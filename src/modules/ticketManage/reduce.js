@@ -31,7 +31,9 @@ export const TicketManage_RecoverList = handleActions(
     },
     {
         list:[],
-        noticeMsg:{}
+        noticeMsg:{},
+        cacheList:{},
+        id:""
     }
 )
 // 订单列表

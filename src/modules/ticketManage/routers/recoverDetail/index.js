@@ -58,7 +58,9 @@ export default class RecoverDetail extends React.Component {
                 voucherFile
             }
         }).then(res => {
-            Toast.success("提交成功", 1)
+            Toast.success("提交成功", 2, () => {
+                this.props.history.push("/ticketManage/orderList")
+            })
         })
     }
     onImageClick(){

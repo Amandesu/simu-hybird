@@ -53,7 +53,7 @@ export default class RecoverList extends React.Component {
                     type:"POST",
                     data: {
                         "openId": TmCache.get("auth").openid,
-                        voucherNo:item.voucherNo
+                        id:item.id
                     }
                 }).then(res => {
                     Toast.success("成功撤回", 2)

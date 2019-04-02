@@ -6,7 +6,7 @@ import { modal } from "antd-mobile";
 import { Helmet } from "react-helmet";
 import { FooterTab } from "ticketManage/component";
 import { RecoverItem } from "ticketManage/component"
-import { callApi } from "Utils"
+import { callApi, throttle } from "Utils"
 import "./index.less";
 const prefix = "ticketManage-recoverList";
 @connect(
@@ -21,10 +21,6 @@ export default class RecoverList extends React.Component {
     componentDidMount(){
         this.getNoticeMsg();
         this.getRecoverList();
-
-        this.content.onscroll = () => {
-            console.log(11)
-        }
     }
     // 获取公共信息
     getNoticeMsg(){
@@ -39,6 +35,7 @@ export default class RecoverList extends React.Component {
     }
     // 获取回收列表
     getRecoverList(){
+        const RecoverList = this.props.RecoverList;;
         callApi({
             url:"/simu/wechat/voucherList",
             type:"POST",
@@ -46,8 +43,10 @@ export default class RecoverList extends React.Component {
             let list = res.data.list;
             this.props.changeData({
                 list: list|| []
-            })
+            })  
         })
+    }
+    cachePosition(node, id){
     }
     render(){
         const { state, props } = this;
@@ -73,7 +72,13 @@ export default class RecoverList extends React.Component {
                                     <div className="item" key={index}>
                                         <RecoverItem
                                             item = {item}
-                                            onClick={() => this.props.history.push(`/ticketManage/recoverDetail/${item.id}`)}
+                                            cachePosition={(node) => this.cachePosition(node, item.id)}
+                                            onClick={() => {
+                                                this.props.changeData({
+                                                    id:item.id
+                                                })
+                                                this.props.history.push(`/ticketManage/recoverDetail/${item.id}`)
+                                            }}
                                         />
                                     </div>
                                 )
